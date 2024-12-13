@@ -1,0 +1,66 @@
+{
+    "name": "piteurstudio/courierdz",
+    "description": "CourierDZ is a PHP client for integrating multiple Algerian shipping providers, including ZR Express, Procolis, Yalidine, Ecotrack, Mayesto Delivery, and more, offering seamless order and tracking management.",
+    "keywords": [
+        "PiteurStudio",
+        "courierdz",
+        "Algeria",
+        "shipping",
+        "tracking",
+        "API",
+        "Yalidine",
+        "ZR Express",
+        "Procolis",
+        "Ecotrack",
+        "Mayesto Delivery"
+    ],
+    "homepage": "https://github.com/PiteurStudio/CourierDZ",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nassim",
+            "email": "mb.nassim@piteur-studio.dz",
+            "role": "Developer"
+        },
+        {
+            "name": "Piteur Studio",
+            "email": "info@piteur-studio.dz",
+            "role": "Company"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "guzzlehttp/guzzle": "^7.0",
+        "illuminate/validation": "^11.34"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "mockery/mockery": "^1.6",
+        "pestphp/pest": "^1.0|^2.0|^3.0",
+        "spatie/ray": "^1.28"
+    },
+    "autoload": {
+        "psr-4": {
+            "CourierDZ\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CourierDZ\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+            "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
