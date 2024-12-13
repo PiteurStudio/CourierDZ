@@ -2,6 +2,14 @@
 
 All notable changes to `CourierDZ` will be documented in this file.
 
+## v0.1.11-beta - 2024-12-13
+
+### What's Changed
+
+* set "minimum-stability": "stable" by @n4ss1m in https://github.com/PiteurStudio/CourierDZ/pull/2
+
+**Full Changelog**: https://github.com/PiteurStudio/CourierDZ/compare/v0.1.1-beta...v0.1.11-beta
+
 ## v0.1.1-beta - 2024-12-13
 
 - Broadened compatibility for illuminate/validation to support Laravel 9,10 and 11
