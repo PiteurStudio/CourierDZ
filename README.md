@@ -36,7 +36,7 @@ Whether you're working on an e-commerce platform or logistics solution, CourierD
 You can install the package via composer:
 
 ```bash
-composer require piteurstudio/courierdz
+composer require piteurstudio/courierdz:v0.1.11-beta
 ```
 
 ### Current Supported Methods
