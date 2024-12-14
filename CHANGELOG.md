@@ -2,6 +2,14 @@
 
 All notable changes to `CourierDZ` will be documented in this file.
 
+## v0.1.14 - 2024-12-14
+
+### What's Changed
+
+* Preparing MaystroDeliveryProvider to be implemented by @n4ss1m in https://github.com/PiteurStudio/CourierDZ/pull/6
+
+**Full Changelog**: https://github.com/PiteurStudio/CourierDZ/compare/v0.1.13-beta...v0.1.14
+
 ## v0.1.12-beta - 2024-12-14
 
 ### What's Changed
