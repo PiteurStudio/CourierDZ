@@ -1,5 +1,3 @@
-### !! THIS PACKAGE IS STILL IN DEVELOPMENT BETA VERSION !!
-
 <img src="https://banners.beyondco.de/CourierDZ.png?theme=light&packageManager=composer+require&packageName=piteurstudio%2Fcourierdz&pattern=architect&style=style_1&description=Simplify+the+integration+of+Algerian+shipping+providers+into+your+applications&md=1&showWatermark=1&fontSize=100px&images=https%3A%2F%2Fwww.php.net%2Fimages%2Flogos%2Fnew-php-logo.svg&widths=300&heights=auto" alt="CourierDZ Banner" />
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/piteurstudio/courierdz.svg?style=flat-square)](https://packagist.org/packages/piteurstudio/courierdz)
