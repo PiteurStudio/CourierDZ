@@ -82,7 +82,7 @@ class MaystroDeliveryProvider implements ShippingProviderContract
 
             // Define the headers
             $headers = [
-                'Authorization' => "Bearer {$this->credentials['token']}",
+                'Authorization' => "Token {$this->credentials['token']}",
             ];
 
             // Make the GET request
