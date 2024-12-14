@@ -9,5 +9,6 @@ enum ShippingProvider: string
     case YALIDINE = 'Yalidine';
     case YALITEC = 'Yalitec';
     case ZREXPRESS = 'ZRExpress';
+    case MAYSTRO_DELIVERY = 'MaystroDelivery';
 
 }
