@@ -47,7 +47,7 @@ composer require piteurstudio/courierdz:^0.1.11-beta
 | getRates(null , \$to_wilaya_id)             | ❌            | ✅            | ✅            | N/A                  |
 | getRates(\$from_wilaya_id , \$to_wilaya_id) | ✅            | ❌            | ❌            | N/A                  |
 | getCreateValidationRules                    | ✅            | ✅            | ✅            | N/A                  |
-| createOrder                                 | ⌛            | ✅            | ✅            | N/A                  |
+| createOrder                                 | ✅            | ✅            | ✅            | N/A                  |
 | getOrder                                    | ✅            | ✅            | ⌛            | N/A                  |
 | orderLabel                                  | ✅            | ❌            | ✅            | N/A                  |
 
