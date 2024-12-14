@@ -1,4 +1,4 @@
-### ! THIS PACKAGE IS STILL IN DEVELOPMENT ALPHA VERSION !!
+### !! THIS PACKAGE IS STILL IN DEVELOPMENT BETA VERSION !!
 
 <img src="https://banners.beyondco.de/CourierDZ.png?theme=light&packageManager=composer+require&packageName=piteurstudio%2Fcourierdz&pattern=architect&style=style_1&description=Simplify+the+integration+of+Algerian+shipping+providers+into+your+applications&md=1&showWatermark=1&fontSize=100px&images=https%3A%2F%2Fwww.php.net%2Fimages%2Flogos%2Fnew-php-logo.svg&widths=300&heights=auto" alt="CourierDZ Banner" />
 
@@ -27,8 +27,8 @@ Whether you're working on an e-commerce platform or logistics solution, CourierD
 
 ## Requirements
 
-- PHP 8.2 or higher
-- cURL extension
+> - PHP 8.2 or higher
+> - cURL extension
 
 
 ## Installation
@@ -36,7 +36,7 @@ Whether you're working on an e-commerce platform or logistics solution, CourierD
 You can install the package via composer:
 
 ```bash
-composer require piteurstudio/courierdz:v0.1.11-beta
+composer require piteurstudio/courierdz:^0.1.11-beta
 ```
 
 ### Current Supported Methods
@@ -62,12 +62,14 @@ composer require piteurstudio/courierdz:v0.1.11-beta
 ```php
 use CourierDZ\CourierDZ;
     
-/*
- * return array of available providers with their metadata :
- * [ name, title, logo, description, website, api_docs, support, tracking_url ]
- */
 $providersMetaData = CourierDZ::providers();
 ```
+
+Return array of available providers with their metadata : 
+
+![image](https://github.com/user-attachments/assets/a4453395-4304-4932-8190-5b49af40eab5)
+
+
 
 ### Setup
 
@@ -98,7 +100,7 @@ $providersMetaData = CourierDZ::providers();
  * 
  */
  
-$shippingService = $courier->provider(ShippingProvider::ZREXPRESS, $credentials);
+$shippingProvider = CourierDZ::provider(ShippingProvider::ZREXPRESS, $credentials);
 ```
 
 ### Get Shipping Provider Metadata
@@ -109,23 +111,13 @@ $shippingService = $courier->provider(ShippingProvider::ZREXPRESS, $credentials)
  * [ name, title, logo, description, website, api_docs, support, tracking_url ]
  */
 
-$metadata = $shippingService->metadata();
+$metadata = $shippingProvider->metadata();
 ```
 
 ***Output :***
 
-```
-[
-    "name" => "Yalidine"
-    "title" => "Yalidine"
-    "logo" => "https://yalidine.com/assets/img/yalidine-logo.png"
-    "description" => "Yalidine société de livraison en Algérie offre un service de livraison rapide et sécurisé ."
-    "website" => "https://yalidine.com/"
-    "api_docs" => "https://yalidine.app/app/dev/docs/api/index.php"
-    "support" => "https://yalidine.com/#contact"
-    "tracking_url" => "https://yalidine.com/suivre-un-colis/"
-[
-```
+![image](https://github.com/user-attachments/assets/8f109f88-4932-40c2-b13d-1dae7d0df1e4)
+
 
 ### Validate Credentials
 
@@ -136,7 +128,7 @@ $metadata = $shippingService->metadata();
  * return bool
  */
  
-echo $shippingService->testCredentials() ? 'Valid.' : 'Invalid.';
+echo $shippingProvider->testCredentials() ? 'Valid.' : 'Invalid.';
 ```
 
 ### Get Rates
@@ -153,15 +145,15 @@ echo $shippingService->testCredentials() ? 'Valid.' : 'Invalid.';
  
 // return all rates
  
-$rates = $shippingService->getRates(); 
+$rates = $shippingProvider->getRates(); 
 
 // return rates to specific wilaya
 
-$rates = $shippingService->getRates(null , $to_wilaya_id);
+$rates = $shippingProvider->getRates(null , $to_wilaya_id);
 
 // Yalidine require $from_wilaya_id , $to_wilaya_id
         
-$rates = $shippingService->getRates($from_wilaya_id , $to_wilaya_id);
+$rates = $shippingProvider->getRates($from_wilaya_id , $to_wilaya_id);
 ```
 
 ### Order Management
@@ -177,30 +169,13 @@ $rates = $shippingService->getRates($from_wilaya_id , $to_wilaya_id);
  * @todo write costum apis to make them looks uniform
  */
  
-$orderCreationRules = $shippingService->getCreateValidationRules();
+$orderCreationRules = $shippingProvider->getCreateOrderValidationRules();
 ```
 
 ***Output :***
 
-```
-[
-  "Tracking" => "nullable|string"
-  "TypeLivraison" => "in:0,1"
-  "TypeColis" => "in:0,1"
-  "Confrimee" => "required|in:0,1"
-  "Client" => "required|string"
-  "MobileA" => "required|string"
-  "MobileB" => "nullable|string"
-  "Adresse" => "required|string"
-  "IDWilaya" => "required|numeric"
-  "Commune" => "required|string"
-  "Total" => "required|numeric"
-  "Note" => "nullable|string"
-  "TProduit" => "required|string"
-  "id_Externe" => "nullable|string"
-  "Source" => "nullable|string"
-] 
-```
+![image](https://github.com/user-attachments/assets/8049a9f1-c294-4714-ad56-8a28e4a2339a)
+
 
 #### - Create Order
 
@@ -210,7 +185,7 @@ $orderCreationRules = $shippingService->getCreateValidationRules();
  * Note : results may vary depending on the provider
  */
  
-$result = $shippingService->createOrder([
+$result = $shippingProvider->createOrder([
         'Tracking' => 'CourierDz-123',
         'TypeLivraison' => 1,
         'TypeColis' => 0,
@@ -247,7 +222,7 @@ $result = $shippingService->getOrder('CourierDz-123');
  * return array of label data ( base64 encoded string or url )
  */
  
-$label = $shippingService->orderLabel('CourierDz-123');
+$label = $shippingProvider->orderLabel('CourierDz-123');
 ```
 
 ***Output :***
