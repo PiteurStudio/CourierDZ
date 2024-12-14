@@ -42,18 +42,23 @@ composer require piteurstudio/courierdz:^0.1.13-beta
 ### Current Supported Methods
 | **Provider/Feature**                        | **Yalidine** | **Procolis** | **Ecotrack** | **Mayesto Delivery** |
 |---------------------------------------------|--------------|--------------|--------------|----------------------|
-| testCredentials                             | ✅            | ✅            | ✅            | N/A                  |
-| getRates                                    | ❌            | ✅            | ✅            | N/A                  |
-| getRates(null , \$to_wilaya_id)             | ❌            | ✅            | ✅            | N/A                  |
-| getRates(\$from_wilaya_id , \$to_wilaya_id) | ✅            | ❌            | ❌            | N/A                  |
-| getCreateValidationRules                    | ✅            | ✅            | ✅            | N/A                  |
-| createOrder                                 | ✅            | ✅            | ✅            | N/A                  |
-| getOrder                                    | ✅            | ✅            | ⌛            | N/A                  |
-| orderLabel                                  | ✅            | ❌            | ✅            | N/A                  |
+| testCredentials                             | ✅            | ✅            | ✅            | ✅                    |
+| getRates                                    | ❌            | ✅            | ✅            | ❔                    |
+| getRates(null , \$to_wilaya_id)             | ❌            | ✅            | ✅            | ❔                    |
+| getRates(\$from_wilaya_id , \$to_wilaya_id) | ✅            | ❌            | ❌            | ❔                    |
+| getCreateValidationRules                    | ✅            | ✅            | ✅            | ❔                    |
+| createOrder                                 | ✅            | ✅            | ✅            | ❔                    |
+| getOrder                                    | ✅            | ✅            | ❔            | ❔                    |
+| updateOrder                                 | ❔            | ❔            | ❔            | ❔                    |
+| cancelOrder                                 | ❔            | ❔            | ❔            | ❔                    |
+| orderLabel                                  | ✅            | ❌            | ✅            | ❔                    |
 
-@todo : Add more methods ( updateOrder, cancelOrder ... etc... )
+ - ✅ Implemented
+ - ❌ Unsupported by the provider
+ - ⌛ In Progress
+ - ❔ Not implemented yet ( unknown if supported or not )
 
-*Suggestion : To support more method we need to create api with user and password for each provider*
+*Note : Unsupported method can be implemented in the future by using user and password instead of API.*
 
 ## Usage
 

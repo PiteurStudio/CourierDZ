@@ -27,7 +27,7 @@ class DhdProvider extends EcotrackProviderIntegration
             'website' => 'https://dhd-dz.com/',
             'api_docs' => 'https://dhd-dz.com/',
             'support' => 'https://dhd-dz.com/#contact',
-            'tracking_url' => 'https://dhd-dz.com/#footer',
+            'tracking_url' => 'https://suivi.ecotrack.dz/suivi/',
         ];
     }
 }
