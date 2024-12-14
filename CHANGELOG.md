@@ -2,6 +2,10 @@
 
 All notable changes to `CourierDZ` will be documented in this file.
 
+## v0.1.15 - 2024-12-14
+
+**Full Changelog**: https://github.com/PiteurStudio/CourierDZ/compare/v0.1.14...v0.1.15
+
 ## v0.1.14 - 2024-12-14
 
 ### What's Changed
