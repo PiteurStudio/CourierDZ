@@ -188,7 +188,7 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
                 'Content-Type' => 'application/json',
             ];
 
-            $request = new Request('POST', 'https://api.yalidine.app/v1/parcels/', $headers, [$orderData]);
+            $request = new Request('POST', $this->apiDomain().'/v1/parcels/', $headers, [$orderData]);
 
             $response = $client->send($request);
 
