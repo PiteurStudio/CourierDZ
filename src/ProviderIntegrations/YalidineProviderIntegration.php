@@ -3,6 +3,7 @@
 namespace CourierDZ\ProviderIntegrations;
 
 use CourierDZ\Contracts\ShippingProviderContract;
+use CourierDZ\Exceptions\CreateOrderException;
 use CourierDZ\Exceptions\CreateOrderValidationException;
 use CourierDZ\Exceptions\CredentialsException;
 use CourierDZ\Exceptions\HttpException;
@@ -10,6 +11,7 @@ use CourierDZ\Exceptions\TrackingIdNotFoundException;
 use CourierDZ\Support\ShippingProviderValidation;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Request;
 
 abstract class YalidineProviderIntegration implements ShippingProviderContract
 {
@@ -158,13 +160,57 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
     /**
      * Create order
      *
-     * @throws CreateOrderValidationException
+     * This method creates an order with the given order data.
+     * It makes a POST request to the Yalidine API with the given order data.
+     * If the request is successful, it returns the created order.
+     * If the request fails, it throws an HttpException.
+     * If the order creation fails, it throws a CreateOrderException.
+     *
+     * @param  array  $orderData  The order data to create an order with
+     * @return array The created order
+     *
+     * @throws CreateOrderValidationException If the order data does not pass validation
+     * @throws CreateOrderException If the order creation fails
+     * @throws HttpException If the request fails
      */
     public function createOrder(array $orderData): array
     {
         $this->validateCreate($orderData);
 
-        return ['Feature In Progress'];
+        try {
+            // Initialize Guzzle client
+            $client = new Client;
+
+            // Define the headers
+            $headers = [
+                'X-API-ID' => $this->credentials['id'],
+                'X-API-TOKEN' => $this->credentials['token'],
+                'Content-Type' => 'application/json',
+            ];
+
+            $request = new Request('POST', 'https://api.yalidine.app/v1/parcels/', $headers, [$orderData]);
+
+            $response = $client->send($request);
+
+            // Get the response body
+            $body = $response->getBody()->getContents();
+
+            $arrayResponse = json_decode($body, true);
+
+            $message = $arrayResponse[$orderData['id']]['message'];
+
+            // Check if the order creation was successful
+            if ($arrayResponse[$orderData['id']]['status'] !== 'true') {
+                throw new CreateOrderException('Create Order failed ( `'.$message.'` ) : '.implode(' ', $arrayResponse[$orderData['id']]));
+            }
+
+            // Return the created order
+            return $arrayResponse[$orderData['id']];
+
+        } catch (GuzzleException $e) {
+            // Handle exceptions
+            throw new HttpException($e->getMessage());
+        }
     }
 
     /**
