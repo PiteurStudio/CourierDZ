@@ -12,7 +12,6 @@ use GuzzleHttp\Exception\GuzzleException;
 
 class MaystroDeliveryProvider implements ShippingProviderContract
 {
-
     use ShippingProviderValidation;
 
     /**
@@ -26,6 +25,7 @@ class MaystroDeliveryProvider implements ShippingProviderContract
     public array $getCreateOrderValidationRules = [
 
     ];
+
     /**
      * Constructor
      *
