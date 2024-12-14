@@ -2,6 +2,14 @@
 
 All notable changes to `CourierDZ` will be documented in this file.
 
+## v0.1.2-beta - 2024-12-14
+
+### What's Changed
+
+* Implement YalidineProviderIntegration.php createOrder method by @n4ss1m in https://github.com/PiteurStudio/CourierDZ/pull/5
+
+**Full Changelog**: https://github.com/PiteurStudio/CourierDZ/compare/v0.1.11-beta...v0.1.2-beta
+
 ## v0.1.11-beta - 2024-12-13
 
 ### What's Changed
