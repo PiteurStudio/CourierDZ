@@ -62,12 +62,14 @@ composer require piteurstudio/courierdz:^0.1.11-beta
 ```php
 use CourierDZ\CourierDZ;
     
-/*
- * return array of available providers with their metadata :
- * [ name, title, logo, description, website, api_docs, support, tracking_url ]
- */
 $providersMetaData = CourierDZ::providers();
 ```
+
+Return array of available providers with their metadata : 
+
+![image](https://github.com/user-attachments/assets/a4453395-4304-4932-8190-5b49af40eab5)
+
+
 
 ### Setup
 
@@ -114,18 +116,8 @@ $metadata = $shippingProvider->metadata();
 
 ***Output :***
 
-```
-[
-    "name" => "Yalidine"
-    "title" => "Yalidine"
-    "logo" => "https://yalidine.com/assets/img/yalidine-logo.png"
-    "description" => "Yalidine société de livraison en Algérie offre un service de livraison rapide et sécurisé ."
-    "website" => "https://yalidine.com/"
-    "api_docs" => "https://yalidine.app/app/dev/docs/api/index.php"
-    "support" => "https://yalidine.com/#contact"
-    "tracking_url" => "https://yalidine.com/suivre-un-colis/"
-[
-```
+![image](https://github.com/user-attachments/assets/8f109f88-4932-40c2-b13d-1dae7d0df1e4)
+
 
 ### Validate Credentials
 
@@ -177,30 +169,13 @@ $rates = $shippingProvider->getRates($from_wilaya_id , $to_wilaya_id);
  * @todo write costum apis to make them looks uniform
  */
  
-$orderCreationRules = $shippingProvider->getCreateValidationRules();
+$orderCreationRules = $shippingProvider->getCreateOrderValidationRules();
 ```
 
 ***Output :***
 
-```
-[
-  "Tracking" => "nullable|string"
-  "TypeLivraison" => "in:0,1"
-  "TypeColis" => "in:0,1"
-  "Confrimee" => "required|in:0,1"
-  "Client" => "required|string"
-  "MobileA" => "required|string"
-  "MobileB" => "nullable|string"
-  "Adresse" => "required|string"
-  "IDWilaya" => "required|numeric"
-  "Commune" => "required|string"
-  "Total" => "required|numeric"
-  "Note" => "nullable|string"
-  "TProduit" => "required|string"
-  "id_Externe" => "nullable|string"
-  "Source" => "nullable|string"
-] 
-```
+![image](https://github.com/user-attachments/assets/8049a9f1-c294-4714-ad56-8a28e4a2339a)
+
 
 #### - Create Order
 
