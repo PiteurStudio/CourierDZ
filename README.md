@@ -263,7 +263,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 - This package is not officially affiliated with or endorsed by any shipping providers. 
 - Names, logos, and trademarks are the property of their respective owners. 
-- Before using any shipping provider, ensure it is authorized by **ARPCE**.  ( Check the approved list [here](https://www.arpce.dz/ar/service/post-sd).  )
+- Before using any shipping provider, ensure it is authorized by **ARPCE**.  ( Check the approved list [here](https://www.arpce.dz/ar/service/post-sd#operators).  )
 - This package may include providers not listed by ARPCE; verify their compliance before use.
 
 ## ⭐ Support Us
