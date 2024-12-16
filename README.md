@@ -68,7 +68,7 @@ use CourierDZ\CourierDZ;
 $providersMetaData = CourierDZ::providers();
 ```
 
-Return array of available providers with their metadata : 
+***Output :***
 
 ![image](https://github.com/user-attachments/assets/a4453395-4304-4932-8190-5b49af40eab5)
 
