@@ -78,29 +78,15 @@ Return array of available providers with their metadata :
 
 ```php
 /*
- * @param string $provider
+ * Provider name can be one of the following: `ShippingProvider::ZREXPRESS` ( check ShippingProvider class for more information )
  * ------------------------------------------------------------------------------
- * Provider name can be one of the following:
+ * For example, to setup a shipping service for Procolis ( ZREXPRESS ), 
+ * you need to provide an array of credentials like this: ['token' => '****', 'key' => '****']
  * 
- * `ShippingProvider::ZREXPRESS` ( check ShippingProvider class for more information )
- * 
- * @param array $credentials
- * ------------------------------------------------------------------------------
- * For example, to setup a shipping service for Procolis ( a.k.a ZREXPRESS ), 
- * you need to provide an array of credentials like this:
- * 
- * ['token' => '****', 'key' => '****']
- * 
- * For Ecotrack, you only need to provide a token like this:
- * 
- * ['token' => '****']
- * 
- * For Yalidine you need to provide an id & token like this:
- * 
- * [ 'id' => '****', 'token' => '****']
+ * For Ecotrack, you only need to provide a token like this: ['token' => '****']
+ * For Yalidine you need to provide an id & token like this:  [ 'id' => '****', 'token' => '****']
  * 
  * Check ShippingProvider class for more information.
- * 
  */
  
 $shippingProvider = CourierDZ::provider(ShippingProvider::ZREXPRESS, $credentials);
@@ -109,11 +95,6 @@ $shippingProvider = CourierDZ::provider(ShippingProvider::ZREXPRESS, $credential
 ### Get Shipping Provider Metadata
 
 ```php
-/*
- * $metadata : It will return an array containing the following :
- * [ name, title, logo, description, website, api_docs, support, tracking_url ]
- */
-
 $metadata = $shippingProvider->metadata();
 ```
 
@@ -140,23 +121,13 @@ echo $shippingProvider->testCredentials() ? 'Valid.' : 'Invalid.';
 /*
  * return array of rates of shipping from one wilaya to another 
  * or all rates depending on the parameters / provider api.
- * 
- * @param string|null $from_wilaya_id
- * @param string|null $to_wilaya_id
- * return array
  */
  
-// return all rates
- 
-$rates = $shippingProvider->getRates(); 
+$rates = $shippingProvider->getRates();  // all rates
 
-// return rates to specific wilaya
-
-$rates = $shippingProvider->getRates(null , $to_wilaya_id);
-
-// Yalidine require $from_wilaya_id , $to_wilaya_id
+$rates = $shippingProvider->getRates(null , $to_wilaya_id); // rates to specific wilaya
         
-$rates = $shippingProvider->getRates($from_wilaya_id , $to_wilaya_id);
+$rates = $shippingProvider->getRates($from_wilaya_id , $to_wilaya_id); // Yalidine require $from_wilaya_id , $to_wilaya_id
 ```
 
 ### Order Management
@@ -165,11 +136,8 @@ $rates = $shippingProvider->getRates($from_wilaya_id , $to_wilaya_id);
 
 ```php
 /*
- * return an array of validation like Laravel rules
  * usefull for form validation and which fields are required to create a new order
  * Note : results may vary depending on the provider
- * 
- * @todo write costum apis to make them looks uniform
  */
  
 $orderCreationRules = $shippingProvider->getCreateOrderValidationRules();
