@@ -12,8 +12,8 @@ class ShippingService
     /**
      * Create a new ShippingService instance for the given provider.
      *
-     * @param  string  $providerName  The name of the shipping provider (e.g. "ZR Express", "Procolis", etc.)
-     * @param  array  $credentials  An array of credentials for the provider (e.g. API key, username, password, etc.)
+     * @param  non-empty-string  $providerName  The name of the shipping provider (e.g. "ZR Express", "Procolis", etc.)
+     * @param  array<non-empty-string, non-empty-string>  $credentials  An array of credentials for the provider (e.g. API key, username, password, etc.)
      *
      * @throws InvalidProviderException If the provider is not valid
      */
@@ -30,6 +30,10 @@ class ShippingService
      * If the provider exists but does not implement ShippingProviderContract
      * or extend XyzProviderIntegration, it throws an InvalidProviderException.
      *
+     * @param non-empty-string $providerName The name of the shipping provider (e.g. "ZR Express", "Procolis", etc.)
+     * @param array<non-empty-string, non-empty-string> $credentials An array of credentials for the provider (e.g. API key, username, password, etc.)
+     *
+     * @return ShippingProviderContract The provider class instance
      * @throws InvalidProviderException If the provider is not valid
      */
     private function loadProvider(string $providerName, array $credentials): ShippingProviderContract
@@ -75,6 +79,8 @@ class ShippingService
 
     /**
      * get the creation validation rules.
+     *
+     * @return array<non-empty-string, non-empty-string> The validation rules for creating an order
      */
     public function getCreateOrderValidationRules(): array
     {
@@ -87,7 +93,7 @@ class ShippingService
      * This method delegates the validation of the order data
      * to the provider's implementation of the validateCreate method.
      *
-     * @param  array  $orderData  The order data to validate
+     * @param  array<non-empty-string, non-empty-string>  $orderData  The order data to validate
      * @return bool True if the order data is valid, false otherwise
      */
     public function validateCreate(array $orderData): bool
@@ -99,9 +105,9 @@ class ShippingService
     /**
      * Get shipping rates for every wilaya or for a specific wilaya.
      *
-     * @param  int|null  $from_wilaya_id  The ID of the wilaya to get rates from
-     * @param  int|null  $to_wilaya_id  The ID of the wilaya to get rates to
-     * @return array An array of shipping rates, each containing the price, and wilaya IDs
+     * @param  int<1, 58>|null  $from_wilaya_id  The ID of the wilaya to get rates from
+     * @param  int<1, 58>|null  $to_wilaya_id  The ID of the wilaya to get rates to
+     * @return array<int , mixed> An array of shipping rates, each containing the price, and wilaya IDs
      */
     public function getRates(?int $from_wilaya_id = null, ?int $to_wilaya_id = null): array
     {
@@ -114,8 +120,9 @@ class ShippingService
      * This method delegates the order creation to the provider's
      * implementation of the createOrder method.
      *
-     * @param  array  $orderData  The order data to create an order with
-     * @return array An array containing the order ID and the tracking ID
+     * @param  array<non-empty-string, mixed>  $orderData  The order data to create an order with
+     *
+     * @return array<non-empty-string, mixed> An array containing the order ID and the tracking ID
      */
     public function createOrder(array $orderData): array
     {
@@ -128,8 +135,8 @@ class ShippingService
      * This method delegates the order retrieval to the provider's
      * implementation of the getOrder method.
      *
-     * @param  string  $trackingId  The tracking ID of the order to retrieve
-     * @return array An array containing the order details
+     * @param  non-empty-string  $trackingId  The tracking ID of the order to retrieve
+     * @return array<non-empty-string, mixed> An array containing the order details
      */
     public function getOrder(string $trackingId): array
     {
@@ -142,8 +149,8 @@ class ShippingService
      * This method delegates the task to the provider's implementation of the
      * orderLabel method, which returns the label details for the given order ID.
      *
-     * @param  string  $orderId  The ID of the order for which to retrieve the label.
-     * @return array An array containing the label details of the order.
+     * @param  non-empty-string  $orderId  The ID of the order for which to retrieve the label.
+     * @return array<non-empty-string, non-empty-string> An array containing the label details of the order.
      */
     public function orderLabel(string $orderId): array
     {
@@ -169,10 +176,10 @@ class ShippingService
     /**
      * Get metadata for the provider.
      *
-     * This method delegates the task to the provider's implementation of the
-     * metaData method, which returns the metadata for the provider.
+     * This method is called by the ShippingService to retrieve metadata about
+     * the current provider.
      *
-     * @return array An array containing the metadata for the provider.
+     * @return array<non-empty-string, non-empty-string|null> An array containing metadata of the provider
      */
     public function metaData(): array
     {
@@ -187,7 +194,7 @@ class ShippingService
      * It then calls the metaData method on each provider to get the
      * provider's metadata and returns an array of all the metadata.
      *
-     * @return array An array containing the metadata for all available providers.
+     * @return array<int , array<non-empty-string, non-empty-string|null>> An array containing the metadata for all available providers.
      */
     public static function getProviders(): array
     {
