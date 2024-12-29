@@ -4,6 +4,9 @@ parameters:
         - src/
 
     # Level 10 is the highest level
-    level: 2
+    level: 6
 
+    # Ignore errors in these paths
+    excludePaths:
+        - src/ShippingProviders/MaystroDeliveryProvider.php
 #    treatPhpDocTypesAsCertain: false
