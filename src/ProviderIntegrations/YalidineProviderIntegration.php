@@ -4,7 +4,6 @@ namespace CourierDZ\ProviderIntegrations;
 
 use CourierDZ\Contracts\ShippingProviderContract;
 use CourierDZ\Exceptions\CreateOrderException;
-use CourierDZ\Exceptions\CreateOrderValidationException;
 use CourierDZ\Exceptions\CredentialsException;
 use CourierDZ\Exceptions\HttpException;
 use CourierDZ\Exceptions\TrackingIdNotFoundException;
@@ -19,12 +18,14 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
 
     /**
      * Provider credentials
+     *
      * @var array<non-empty-string, non-empty-string>
      */
     protected array $credentials;
 
     /**
      * Validation rules for creating an order
+     *
      * @var array<non-empty-string, non-empty-string>
      */
     public array $getCreateOrderValidationRules = [
@@ -54,7 +55,8 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
     /**
      * Constructor
      *
-     * @param array<non-empty-string, non-empty-string> $credentials The provider credentials
+     * @param  array<non-empty-string, non-empty-string>  $credentials  The provider credentials
+     *
      * @throws CredentialsException
      */
     public function __construct(array $credentials)
@@ -166,7 +168,7 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function createOrder(array $orderData): array
     {
@@ -211,7 +213,7 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function orderLabel(string $orderId): array
     {

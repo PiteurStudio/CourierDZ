@@ -15,7 +15,7 @@ class YalitecProvider extends YalidineProviderIntegration
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function metadata(): array
     {

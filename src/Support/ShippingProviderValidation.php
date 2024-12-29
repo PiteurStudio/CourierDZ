@@ -14,6 +14,7 @@ trait ShippingProviderValidation
      *
      * @param  array<non-empty-string, non-empty-string>  $orderData  The data to validate
      * @return bool True if the validation passes
+     *
      * @throws CreateOrderValidationException If the validation fails
      */
     public function validateCreate(array $orderData): bool

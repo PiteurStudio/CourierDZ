@@ -7,7 +7,7 @@ use CourierDZ\ProviderIntegrations\ProcolisProviderIntegration;
 class ZRExpressProvider extends ProcolisProviderIntegration
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function metadata(): array
     {

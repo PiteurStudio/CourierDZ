@@ -30,10 +30,10 @@ class ShippingService
      * If the provider exists but does not implement ShippingProviderContract
      * or extend XyzProviderIntegration, it throws an InvalidProviderException.
      *
-     * @param non-empty-string $providerName The name of the shipping provider (e.g. "ZR Express", "Procolis", etc.)
-     * @param array<non-empty-string, non-empty-string> $credentials An array of credentials for the provider (e.g. API key, username, password, etc.)
-     *
+     * @param  non-empty-string  $providerName  The name of the shipping provider (e.g. "ZR Express", "Procolis", etc.)
+     * @param  array<non-empty-string, non-empty-string>  $credentials  An array of credentials for the provider (e.g. API key, username, password, etc.)
      * @return ShippingProviderContract The provider class instance
+     *
      * @throws InvalidProviderException If the provider is not valid
      */
     private function loadProvider(string $providerName, array $credentials): ShippingProviderContract
@@ -121,7 +121,6 @@ class ShippingService
      * implementation of the createOrder method.
      *
      * @param  array<non-empty-string, mixed>  $orderData  The order data to create an order with
-     *
      * @return array<non-empty-string, mixed> An array containing the order ID and the tracking ID
      */
     public function createOrder(array $orderData): array

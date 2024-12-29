@@ -40,7 +40,6 @@ interface ShippingProviderContract
      * implementation of the createOrder method.
      *
      * @param  array<non-empty-string, mixed>  $orderData  The order data to create an order with
-     *
      * @return array<non-empty-string, mixed> An array containing the order ID and the tracking ID
      */
     public function createOrder(array $orderData): array;

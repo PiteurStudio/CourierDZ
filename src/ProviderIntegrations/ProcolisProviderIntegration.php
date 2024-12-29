@@ -4,7 +4,6 @@ namespace CourierDZ\ProviderIntegrations;
 
 use CourierDZ\Contracts\ShippingProviderContract;
 use CourierDZ\Exceptions\CreateOrderException;
-use CourierDZ\Exceptions\CreateOrderValidationException;
 use CourierDZ\Exceptions\CredentialsException;
 use CourierDZ\Exceptions\FunctionNotSupportedException;
 use CourierDZ\Exceptions\HttpException;
@@ -20,12 +19,14 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
 
     /**
      * Provider credentials
+     *
      * @var array<non-empty-string, non-empty-string>
      */
     private array $credentials;
 
     /**
      * Validation rules for creating an order
+     *
      * @var array<non-empty-string, non-empty-string>
      */
     public array $getCreateOrderValidationRules = [
@@ -117,7 +118,7 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getRates(?int $from_wilaya_id, ?int $to_wilaya_id): array
     {
@@ -176,7 +177,7 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function createOrder(array $orderData): array
     {
@@ -234,7 +235,7 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getOrder(string $trackingId): array
     {
@@ -296,7 +297,7 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     abstract public static function metadata(): array;
 }
