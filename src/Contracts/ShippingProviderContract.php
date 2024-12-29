@@ -5,6 +5,7 @@ namespace CourierDZ\Contracts;
 interface ShippingProviderContract
 {
     public function getCreateOrderValidationRules(): array;
+
     /**
      * Check if the credentials are valid.
      *
@@ -80,7 +81,7 @@ interface ShippingProviderContract
      * @param  string  $orderId
      * @return bool
      */
-//    public function cancelOrder(string $orderId): bool;
+    //    public function cancelOrder(string $orderId): bool;
 
     /**
      * Get metadata for the provider.

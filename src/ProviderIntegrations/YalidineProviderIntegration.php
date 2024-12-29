@@ -161,6 +161,7 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
     {
         return $this->getCreateOrderValidationRules;
     }
+
     /**
      * Create order
      *

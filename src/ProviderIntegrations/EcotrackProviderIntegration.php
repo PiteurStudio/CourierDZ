@@ -177,6 +177,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
     {
         return $this->getCreateOrderValidationRules;
     }
+
     /**
      * Create order
      *
