@@ -80,7 +80,7 @@ class ShippingService
     /**
      * get the creation validation rules.
      *
-     * @return array<non-empty-string, non-empty-string> The validation rules for creating an order
+     * @return array<non-empty-string, non-empty-string|array<int, non-empty-string>> The validation rules for creating an order
      */
     public function getCreateOrderValidationRules(): array
     {
@@ -198,7 +198,14 @@ class ShippingService
     public static function getProviders(): array
     {
         $providers = [];
-        foreach (glob(__DIR__.'/../ShippingProviders/*Provider.php') as $file) {
+
+        $providersList = glob(__DIR__.'/../ShippingProviders/*Provider.php');
+
+        if($providersList === false) {
+            $providersList = [];
+        }
+
+        foreach ($providersList as $file) {
             $className = basename($file, '.php');
             $namespace = "CourierDZ\\ShippingProviders\\{$className}";
 
