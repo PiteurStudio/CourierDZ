@@ -187,6 +187,10 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
 
             $requestBody = json_encode([$orderData], JSON_UNESCAPED_UNICODE);
 
+            if($requestBody === false) {
+                throw new CreateOrderException('Create Order failed : JSON encoding error');
+            }
+
             $request = new Request('POST', $this->apiDomain().'/v1/parcels/', $headers, $requestBody);
 
             $response = $client->send($request);
