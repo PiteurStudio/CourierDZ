@@ -115,6 +115,11 @@ class MaystroDeliveryProvider implements ShippingProviderContract
         throw new NotImplementedException('Not implemented');
     }
 
+    public function getCreateOrderValidationRules(): array
+    {
+        return $this->getCreateOrderValidationRules;
+    }
+
     public function createOrder(array $orderData): array
     {
         throw new NotImplementedException('Not implemented');

@@ -46,5 +46,8 @@ jobs:
       - name: List Installed Dependencies
         run: composer show -D
 
+      - name: PHPStan Analyse
+        run: composer analyse
+
       - name: Execute tests
         run: vendor/bin/pest

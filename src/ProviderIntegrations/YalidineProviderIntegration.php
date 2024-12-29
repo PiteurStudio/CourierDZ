@@ -4,7 +4,6 @@ namespace CourierDZ\ProviderIntegrations;
 
 use CourierDZ\Contracts\ShippingProviderContract;
 use CourierDZ\Exceptions\CreateOrderException;
-use CourierDZ\Exceptions\CreateOrderValidationException;
 use CourierDZ\Exceptions\CredentialsException;
 use CourierDZ\Exceptions\HttpException;
 use CourierDZ\Exceptions\TrackingIdNotFoundException;
@@ -19,11 +18,15 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
 
     /**
      * Provider credentials
+     *
+     * @var array<non-empty-string, non-empty-string>
      */
     protected array $credentials;
 
     /**
      * Validation rules for creating an order
+     *
+     * @var array<non-empty-string, non-empty-string>
      */
     public array $getCreateOrderValidationRules = [
         'order_id' => 'required|string',
@@ -51,6 +54,8 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
 
     /**
      * Constructor
+     *
+     * @param  array<non-empty-string, non-empty-string>  $credentials  The provider credentials
      *
      * @throws CredentialsException
      */
@@ -157,21 +162,13 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
         }
     }
 
+    public function getCreateOrderValidationRules(): array
+    {
+        return $this->getCreateOrderValidationRules;
+    }
+
     /**
-     * Create order
-     *
-     * This method creates an order with the given order data.
-     * It makes a POST request to the Yalidine API with the given order data.
-     * If the request is successful, it returns the created order.
-     * If the request fails, it throws an HttpException.
-     * If the order creation fails, it throws a CreateOrderException.
-     *
-     * @param  array  $orderData  The order data to create an order with
-     * @return array The created order
-     *
-     * @throws CreateOrderValidationException If the order data does not pass validation
-     * @throws CreateOrderException If the order creation fails
-     * @throws HttpException If the request fails
+     * {@inheritdoc}
      */
     public function createOrder(array $orderData): array
     {
@@ -188,7 +185,13 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
                 'Content-Type' => 'application/json',
             ];
 
-            $request = new Request('POST', $this->apiDomain().'/v1/parcels/', $headers, [$orderData]);
+            $requestBody = json_encode([$orderData], JSON_UNESCAPED_UNICODE);
+
+            if ($requestBody === false) {
+                throw new CreateOrderException('Create Order failed : JSON encoding error');
+            }
+
+            $request = new Request('POST', $this->apiDomain().'/v1/parcels/', $headers, $requestBody);
 
             $response = $client->send($request);
 
@@ -214,14 +217,7 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
     }
 
     /**
-     * Get order label
-     *
-     * @return array Associative array with the following keys:
-     *               - type: string, 'url'
-     *               - data: string, the PDF label URL
-     *
-     * @throws TrackingIdNotFoundException
-     * @throws HttpException
+     * {@inheritdoc}
      */
     public function orderLabel(string $orderId): array
     {

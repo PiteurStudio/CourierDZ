@@ -12,7 +12,7 @@ class CourierDZ
      * Create a new ShippingService instance for the given provider.
      *
      * @param  ShippingProvider  $provider  The provider to use
-     * @param  array  $credentials  The credentials to use for the provider
+     * @param  array<non-empty-string, non-empty-string>  $credentials  The credentials to use for the provider
      *
      * @throws InvalidProviderException
      */
@@ -27,7 +27,7 @@ class CourierDZ
      * This function calls the ShippingService to get the details of all providers
      * that are currently integrated into the system.
      *
-     * @return array An array containing metadata of all available providers.
+     * @return array<int , array<non-empty-string, non-empty-string|null>> An array containing metadata of all available providers.
      */
     public static function providers(): array
     {
