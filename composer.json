@@ -37,6 +37,7 @@
         "laravel/pint": "^1.0",
         "mockery/mockery": "^1.6",
         "pestphp/pest": "^1.0|^2.0|^3.0",
+        "phpstan/phpstan": "^2.0",
         "spatie/ray": "^1.28"
     },
     "autoload": {
@@ -51,7 +52,8 @@
     },
     "scripts": {
         "test": "vendor/bin/pest",
-            "test-coverage": "vendor/bin/pest --coverage",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "analyse": "vendor/bin/phpstan",
         "format": "vendor/bin/pint"
     },
     "config": {
