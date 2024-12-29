@@ -2,6 +2,14 @@
 
 All notable changes to `CourierDZ` will be documented in this file.
 
+## v0.1.16 - 2024-12-29
+
+### What's Changed
+
+* Add PHPStan integration for static analysis by @n4ss1m in https://github.com/PiteurStudio/CourierDZ/pull/7
+
+**Full Changelog**: https://github.com/PiteurStudio/CourierDZ/compare/v0.1.15...v0.1.16
+
 ## v0.1.15 - 2024-12-14
 
 **Full Changelog**: https://github.com/PiteurStudio/CourierDZ/compare/v0.1.14...v0.1.15
