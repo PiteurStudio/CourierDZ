@@ -18,8 +18,16 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
 {
     use ShippingProviderValidation;
 
+    /**
+     * Provider credentials
+     * @var array<non-empty-string, non-empty-string>
+     */
     private array $credentials;
 
+    /**
+     * Validation rules for creating an order
+     * @var array<non-empty-string, non-empty-string>
+     */
     public array $getCreateOrderValidationRules = [
         'Tracking' => 'nullable|string',
         'TypeLivraison' => 'in:0,1', // Domicile : 0 & Stopdesk : 1
@@ -41,7 +49,7 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
     /**
      * Create a new instance of the Procolis provider integration.
      *
-     * @param  array  $credentials  An array of credentials for the provider, containing the 'token' and 'key' keys
+     * @param  array<non-empty-string, non-empty-string>  $credentials  An array of credentials for the provider, containing the 'token' and 'key' keys
      *
      * @throws CredentialsException If the credentials do not contain the 'token' and 'key' keys
      */
@@ -109,13 +117,7 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
     }
 
     /**
-     * Gets shipping rates for every wilaya or for a specific wilaya.
-     *
-     * @param  int|null  $from_wilaya_id  The ID of the wilaya to get rates from
-     * @param  int|null  $to_wilaya_id  The ID of the wilaya to get rates to
-     * @return array An array of shipping rates, each containing the price, and wilaya IDs
-     *
-     * @throws HttpException If the request fails
+     * @inheritdoc
      */
     public function getRates(?int $from_wilaya_id, ?int $to_wilaya_id): array
     {
@@ -174,14 +176,7 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
     }
 
     /**
-     * Create an order with the given order data.
-     *
-     * @param  array  $orderData  The order data to create an order with
-     * @return array The created order
-     *
-     * @throws CreateOrderValidationException If the order data does not pass validation
-     * @throws HttpException If the request fails
-     * @throws CreateOrderException If the order creation fails
+     * @inheritdoc
      */
     public function createOrder(array $orderData): array
     {
@@ -239,13 +234,7 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
     }
 
     /**
-     * Retrieves an order from the Procolis API using the given tracking ID.
-     *
-     * @param  string  $trackingId  The tracking ID of the order to retrieve.
-     * @return array The retrieved order.
-     *
-     * @throws TrackingIdNotFoundException If the tracking ID is not found.
-     * @throws HttpException If the request fails.
+     * @inheritdoc
      */
     public function getOrder(string $trackingId): array
     {

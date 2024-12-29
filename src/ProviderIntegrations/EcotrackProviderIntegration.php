@@ -19,12 +19,14 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
     use ShippingProviderValidation;
 
     /**
-     * EcotrackProviderIntegration credentials
+     * Provider credentials
+     * @var array<non-empty-string, non-empty-string>
      */
     protected array $credentials;
 
     /**
      * Validation rules for creating an order
+     * @var array<non-empty-string, non-empty-string>
      */
     public array $getCreateOrderValidationRules = [
         'reference' => 'nullable|string|max:255',
@@ -49,7 +51,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
     /**
      * EcotrackProviderIntegration constructor.
      *
-     * @param  array  $credentials  An array of credentials for the provider, containing the 'token' key
+     * @param  array<non-empty-string, non-empty-string>  $credentials  An array of credentials for the provider, containing the 'token' key
      *
      * @throws CredentialsException If the credentials do not contain the 'token' key
      */
@@ -117,16 +119,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
     }
 
     /**
-     * Get shipping rates for every wilaya or for a specific wilaya
-     *
-     * This method makes a GET request to the Ecotrack API to retrieve the list of shipping rates
-     * for every wilaya or for a specific wilaya.
-     *
-     * @param  int|null  $from_wilaya_id  The ID of the wilaya to get rates from
-     * @param  int|null  $to_wilaya_id  The ID of the wilaya to get rates to
-     * @return array An array of shipping rates, each containing the price, and wilaya IDs
-     *
-     * @throws HttpException If the request fails
+     * @inheritdoc
      */
     public function getRates(?int $from_wilaya_id, ?int $to_wilaya_id): array
     {
@@ -179,13 +172,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
     }
 
     /**
-     * Create order
-     *
-     * @param  array  $orderData  The order data to create an order with
-     *
-     * @throws CreateOrderException If the order creation fails
-     * @throws CreateOrderValidationException If the order data does not pass validation
-     * @throws HttpException If there is an error with the HTTP request
+     * @inheritdoc
      */
     public function createOrder(array $orderData): array
     {
@@ -233,19 +220,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
     }
 
     /**
-     * Retrieve the label for a specific order.
-     *
-     * This method makes a GET request to the Ecotrack API to retrieve the label
-     * for the order with the given tracking ID.
-     *
-     * @param  string  $orderId  The tracking ID of the order to retrieve the label for.
-     * @return array An array containing the label details. The array should contain
-     *               the following keys:
-     *               - type: The type of the label (e.g. pdf or url)
-     *               - data: The label data as a base64 encoded string or url.
-     *
-     * @throws HttpException If the request fails
-     * @throws TrackingIdNotFoundException If the tracking ID is not found in Ecotrack.
+     * @inheritdoc
      */
     public function orderLabel(string $orderId): array
     {
