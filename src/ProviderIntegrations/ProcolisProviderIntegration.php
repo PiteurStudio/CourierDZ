@@ -12,6 +12,7 @@ use CourierDZ\Support\ShippingProviderValidation;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
+use http\Exception\InvalidArgumentException;
 
 abstract class ProcolisProviderIntegration implements ShippingProviderContract
 {
@@ -193,6 +194,10 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
 
         $requestBody = json_encode($data, JSON_UNESCAPED_UNICODE);
 
+        if($requestBody === false) {
+            throw new CreateOrderException('Create Order failed ( JSON Encoding Error ) : '.json_last_error_msg());
+        }
+
         try {
             // Initialize Guzzle client
             $client = new Client;
@@ -246,6 +251,10 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
         ];
 
         $requestBody = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+        if($requestBody === false) {
+            throw new InvalidArgumentException('$trackingId must be a non-empty string');
+        }
 
         try {
             // Initialize Guzzle client

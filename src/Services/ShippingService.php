@@ -149,7 +149,7 @@ class ShippingService
      * orderLabel method, which returns the label details for the given order ID.
      *
      * @param  non-empty-string  $orderId  The ID of the order for which to retrieve the label.
-     * @return array<non-empty-string, non-empty-string> An array containing the label details of the order.
+     * @return array{type: 'pdf'|'url', data: non-empty-string} An array containing the label details of the order.
      */
     public function orderLabel(string $orderId): array
     {
