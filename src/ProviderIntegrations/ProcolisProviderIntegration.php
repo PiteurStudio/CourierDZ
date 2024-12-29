@@ -194,7 +194,7 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
 
         $requestBody = json_encode($data, JSON_UNESCAPED_UNICODE);
 
-        if($requestBody === false) {
+        if ($requestBody === false) {
             throw new CreateOrderException('Create Order failed ( JSON Encoding Error ) : '.json_last_error_msg());
         }
 
@@ -252,7 +252,7 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
 
         $requestBody = json_encode($data, JSON_UNESCAPED_UNICODE);
 
-        if($requestBody === false) {
+        if ($requestBody === false) {
             throw new InvalidArgumentException('$trackingId must be a non-empty string');
         }
 

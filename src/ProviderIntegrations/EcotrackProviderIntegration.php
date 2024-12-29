@@ -185,7 +185,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
 
         $requestBody = json_encode($data, JSON_UNESCAPED_UNICODE);
 
-        if($requestBody === false) {
+        if ($requestBody === false) {
             throw new CreateOrderException('Failed to encode order data to JSON.');
         }
 
@@ -258,7 +258,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
             // Get the response body
             $label = $response->getBody()->getContents();
 
-            if(empty($label)){
+            if (empty($label)) {
                 throw new HttpException('Failed to retrieve label for order with tracking ID '.$orderId.' - Empty response from Ecotrack');
             }
 

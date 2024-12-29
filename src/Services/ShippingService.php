@@ -201,7 +201,7 @@ class ShippingService
 
         $providersList = glob(__DIR__.'/../ShippingProviders/*Provider.php');
 
-        if($providersList === false) {
+        if ($providersList === false) {
             $providersList = [];
         }
 
