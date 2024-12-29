@@ -4,6 +4,14 @@ namespace CourierDZ\Contracts;
 
 interface ShippingProviderContract
 {
+    /**
+     * Get validation rules for creating an order.
+     *
+     * This method is called by the ShippingService to retrieve the validation
+     * rules required for creating a new order using the current provider.
+     *
+     * @return array<non-empty-string, non-empty-string|array<int, non-empty-string>> An array of validation rules for order creation.
+     */
     public function getCreateOrderValidationRules(): array;
 
     /**
@@ -17,25 +25,23 @@ interface ShippingProviderContract
     public function testCredentials(): bool;
 
     /**
-     * Get a list of all available wilayas.
+     * Get shipping rates for every wilaya or for a specific wilaya.
      *
-     * This method is called by the ShippingService to get the rates for
-     * the current provider.
-     *
-     * @param  int|null  $from_wilaya_id  The ID of the wilaya to get rates from
-     * @param  int|null  $to_wilaya_id  The ID of the wilaya to get rates to
-     * @return array An array of shipping rates, each containing the price, and wilaya IDs
+     * @param  int<1, 58>|null  $from_wilaya_id  The ID of the wilaya to get rates from
+     * @param  int<1, 58>|null  $to_wilaya_id  The ID of the wilaya to get rates to
+     * @return array<int , mixed> An array of shipping rates, each containing the price, and wilaya IDs
      */
     public function getRates(?int $from_wilaya_id, ?int $to_wilaya_id): array;
 
     /**
      * Create a new order.
      *
-     * This method is called by the ShippingService to create a new order
-     * using the current provider.
+     * This method delegates the order creation to the provider's
+     * implementation of the createOrder method.
      *
-     * @param  array  $orderData  The order data to create an order with
-     * @return array An array containing the order ID and the tracking ID
+     * @param  array<non-empty-string, mixed>  $orderData  The order data to create an order with
+     *
+     * @return array<non-empty-string, mixed> An array containing the order ID and the tracking ID
      */
     public function createOrder(array $orderData): array;
 
@@ -49,22 +55,22 @@ interface ShippingProviderContract
     /**
      * Read an order by its tracking ID.
      *
-     * This method is called by the ShippingService to read an order
-     * using the current provider.
+     * This method delegates the order retrieval to the provider's
+     * implementation of the getOrder method.
      *
-     * @param  string  $trackingId  The tracking ID of the order to retrieve
-     * @return array An array containing the order details
+     * @param  non-empty-string  $trackingId  The tracking ID of the order to retrieve
+     * @return array<non-empty-string, mixed> An array containing the order details
      */
     public function getOrder(string $trackingId): array;
 
     /**
-     * Retrieve the label for an order.
+     * Retrieve the label for a specific order.
      *
-     * This method is called by the ShippingService to retrieve the label
-     * for an order using the current provider.
+     * This method delegates the task to the provider's implementation of the
+     * orderLabel method, which returns the label details for the given order ID.
      *
-     * @param  string  $orderId  The ID of the order to retrieve the label for
-     * @return array An array containing the label details of the order
+     * @param  non-empty-string  $orderId  The ID of the order for which to retrieve the label.
+     * @return array<non-empty-string, non-empty-string> An array containing the label details of the order.
      */
     public function orderLabel(string $orderId): array;
 
@@ -94,12 +100,12 @@ interface ShippingProviderContract
     public static function metadata(): array; // Return name, logo, description
 
     /**
-     * Validate data for creating an order.
+     * Validate the order creation data.
      *
-     * This method is called by the ShippingService to validate the order data
-     * before creating a new order using the current provider.
+     * This method delegates the validation of the order data
+     * to the provider's implementation of the validateCreate method.
      *
-     * @param  array  $data  The order data to validate
+     * @param  array<non-empty-string, non-empty-string>  $data  The order data to validate
      * @return bool True if the order data is valid, false otherwise
      */
     public function validateCreate(array $data): bool;
