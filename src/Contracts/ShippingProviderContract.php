@@ -89,7 +89,7 @@ interface ShippingProviderContract
      * This method is called by the ShippingService to retrieve metadata about
      * the current provider.
      *
-     * @return array An array containing metadata of the provider
+     * @return array<non-empty-string, non-empty-string|null> An array containing metadata of the provider
      */
     public static function metadata(): array; // Return name, logo, description
 

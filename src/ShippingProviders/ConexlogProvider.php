@@ -15,7 +15,7 @@ class ConexlogProvider extends EcotrackProviderIntegration
     }
 
     /**
-     * The metadata for the provider.
+     * @inheritdoc
      */
     public static function metadata(): array
     {

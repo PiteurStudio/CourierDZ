@@ -307,12 +307,7 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
     }
 
     /**
-     * Retrieve metadata for the provider.
-     *
-     * This method returns an array containing metadata details about
-     * the Procolis provider, such as its name, supported features, etc.
-     *
-     * @return array An array containing the metadata of the provider.
+     * @inheritdoc
      */
     abstract public static function metadata(): array;
 }
