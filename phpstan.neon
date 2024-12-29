@@ -4,7 +4,7 @@ parameters:
         - src/
 
     # Level 10 is the highest level
-    level: 7
+    level: 8
 
     # Ignore errors in these paths
     excludePaths:
