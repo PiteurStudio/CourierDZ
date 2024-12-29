@@ -78,7 +78,7 @@ class ShippingService
      */
     public function getCreateOrderValidationRules(): array
     {
-        return $this->provider->getCreateOrderValidationRules;
+        return $this->provider->getCreateOrderValidationRules();
     }
 
     /**
@@ -151,20 +151,20 @@ class ShippingService
         return $this->provider->orderLabel($orderId);
     }
 
-    /**
-     * Cancel an order.
-     *
-     * This method delegates the cancellation of an order to the provider's
-     * implementation of the cancelOrder method.
-     *
-     * @param  string  $orderId  The ID of the order to be canceled.
-     * @return bool True if the order was successfully canceled, false otherwise.
-     */
-    public function cancelOrder(string $orderId): bool
-    {
-        // Delegate the cancellation to the provider's cancelOrder method
-        return $this->provider->cancelOrder($orderId);
-    }
+//    /**
+//     * Cancel an order.
+//     *
+//     * This method delegates the cancellation of an order to the provider's
+//     * implementation of the cancelOrder method.
+//     *
+//     * @param  string  $orderId  The ID of the order to be canceled.
+//     * @return bool True if the order was successfully canceled, false otherwise.
+//     */
+//    public function cancelOrder(string $orderId): bool
+//    {
+//        // Delegate the cancellation to the provider's cancelOrder method
+//        return $this->provider->cancelOrder($orderId);
+//    }
 
     /**
      * Get metadata for the provider.

@@ -168,6 +168,10 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
         }
     }
 
+    public function getCreateOrderValidationRules(): array
+    {
+        return $this->getCreateOrderValidationRules;
+    }
     /**
      * Create an order with the given order data.
      *
