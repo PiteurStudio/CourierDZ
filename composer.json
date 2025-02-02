@@ -51,10 +51,16 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
-        "analyse": "vendor/bin/phpstan",
-        "format": "vendor/bin/pint"
+        "lint": "pint",
+        "test:unit": "pest --coverage --min=25",
+        "test:lint": "pint --test",
+        "test:types": "phpstan",
+        "test:report": "pest --coverage --coverage-html coverage",
+        "test": [
+            "@test:unit",
+            "@test:lint",
+            "@test:types"
+        ]
     },
     "config": {
         "sort-packages": true,

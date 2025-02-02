@@ -33,7 +33,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
-          coverage: none
+          coverage: xdebug
 
       - name: Setup problem matchers
         run: |
@@ -46,8 +46,5 @@ jobs:
       - name: List Installed Dependencies
         run: composer show -D
 
-      - name: PHPStan Analyse
-        run: composer analyse
-
       - name: Execute tests
-        run: vendor/bin/pest
+        run: composer test
