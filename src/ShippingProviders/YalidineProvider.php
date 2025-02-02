@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CourierDZ\ShippingProviders;
 
 use CourierDZ\ProviderIntegrations\YalidineProviderIntegration;

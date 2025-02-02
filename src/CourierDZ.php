@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CourierDZ;
 
 use CourierDZ\Enum\ShippingProvider;
