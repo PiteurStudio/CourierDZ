@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CourierDZ\ProviderIntegrations;
 
 use CourierDZ\Contracts\ShippingProviderContract;
@@ -122,9 +124,9 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
 
             // Any other status code is considered an unexpected error
             throw new HttpException('Yalidine, Unexpected error occurred.');
-        } catch (GuzzleException $e) {
+        } catch (GuzzleException $guzzleException) {
             // Handle exceptions
-            throw new HttpException($e->getMessage());
+            throw new HttpException($guzzleException->getMessage());
         }
     }
 
@@ -156,9 +158,9 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
             // Return the response body as an array
             return json_decode($response->getBody()->getContents(), true);
 
-        } catch (GuzzleException $e) {
+        } catch (GuzzleException $guzzleException) {
             // Handle exceptions
-            throw new HttpException($e->getMessage());
+            throw new HttpException($guzzleException->getMessage());
         }
     }
 
@@ -210,9 +212,9 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
             // Return the created order
             return $arrayResponse[$orderData['id']];
 
-        } catch (GuzzleException $e) {
+        } catch (GuzzleException $guzzleException) {
             // Handle exceptions
-            throw new HttpException($e->getMessage());
+            throw new HttpException($guzzleException->getMessage());
         }
     }
 
@@ -262,9 +264,9 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
 
             return $data['data'][0];
 
-        } catch (GuzzleException $e) {
+        } catch (GuzzleException $guzzleException) {
             // Handle exceptions
-            throw new HttpException($e->getMessage());
+            throw new HttpException($guzzleException->getMessage());
         }
     }
 }

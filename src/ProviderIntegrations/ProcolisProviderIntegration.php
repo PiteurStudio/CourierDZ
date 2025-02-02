@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CourierDZ\ProviderIntegrations;
 
 use CourierDZ\Contracts\ShippingProviderContract;
@@ -108,9 +110,9 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
                 // If the request returns any other status code, throw an HttpException
                 default => throw new HttpException('Procolis, Unexpected error occurred.'),
             };
-        } catch (GuzzleException $e) {
+        } catch (GuzzleException $guzzleException) {
             // Handle exceptions
-            throw new HttpException($e->getMessage());
+            throw new HttpException($guzzleException->getMessage());
         }
 
     }
@@ -142,7 +144,7 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
             $result = json_decode($body, true);
 
             // If the to_wilaya_id is specified, filter the result to only include the specified wilaya
-            if ($to_wilaya_id) {
+            if ($to_wilaya_id !== null && $to_wilaya_id !== 0) {
                 $filteredResult = [];
                 foreach ($result as $wilaya) {
                     if ($wilaya['IDWilaya'] == $to_wilaya_id) {
@@ -163,9 +165,9 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
             // Decode JSON response
             return $result;
 
-        } catch (GuzzleException $e) {
+        } catch (GuzzleException $guzzleException) {
             // Handle exceptions
-            throw new HttpException($e->getMessage());
+            throw new HttpException($guzzleException->getMessage());
         }
     }
 
@@ -230,9 +232,9 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
             // Return the created order
             return $arrayResponse['Colis'][0];
 
-        } catch (GuzzleException $e) {
+        } catch (GuzzleException $guzzleException) {
             // Handle exceptions
-            throw new HttpException($e->getMessage());
+            throw new HttpException($guzzleException->getMessage());
         }
     }
 
@@ -280,9 +282,9 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
             // Decode JSON response
             return $arrayResponse['Colis'][0];
 
-        } catch (GuzzleException $e) {
+        } catch (GuzzleException $guzzleException) {
             // Handle exceptions
-            throw new HttpException($e->getMessage());
+            throw new HttpException($guzzleException->getMessage());
         }
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CourierDZ\ProviderIntegrations;
 
 use CourierDZ\Contracts\ShippingProviderContract;
@@ -61,7 +63,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
         $provider_name = (static::metadata())['name'];
 
         if (! isset($credentials['token'])) {
-            throw new CredentialsException("{$provider_name} credentials must include 'token'.");
+            throw new CredentialsException($provider_name." credentials must include 'token'.");
         }
 
         $this->credentials = $credentials;
@@ -91,7 +93,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
 
             // Define the headers
             $headers = [
-                'Authorization' => "Bearer {$this->credentials['token']}",
+                'Authorization' => 'Bearer '.$this->credentials['token'],
             ];
 
             // Make the GET request
@@ -109,9 +111,9 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
                 // If the request returns any other status code, throw an HttpException
                 default => throw new HttpException('Ecotrack '.static::metadata()['name'].', Unexpected error occurred.'),
             };
-        } catch (GuzzleException $e) {
+        } catch (GuzzleException $guzzleException) {
             // Handle exceptions
-            throw new HttpException($e->getMessage());
+            throw new HttpException($guzzleException->getMessage());
         }
     }
 
@@ -126,7 +128,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
 
             // Define the headers
             $headers = [
-                'Authorization' => "Bearer {$this->credentials['token']}",
+                'Authorization' => 'Bearer '.$this->credentials['token'],
             ];
 
             // Make the GET request
@@ -142,7 +144,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
             $result = json_decode($body, true);
 
             // If the to_wilaya_id is specified, filter the result to only include the specified wilaya
-            if ($to_wilaya_id) {
+            if ($to_wilaya_id !== null && $to_wilaya_id !== 0) {
                 foreach ($result['livraison'] as $wilaya) {
                     if ($wilaya['wilaya_id'] == $to_wilaya_id) {
                         // Return the first matching wilaya
@@ -157,9 +159,9 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
             // Return the list of shipping rates
             return $result['livraison'];
 
-        } catch (GuzzleException $e) {
+        } catch (GuzzleException $guzzleException) {
             // Handle exceptions
-            throw new HttpException($e->getMessage());
+            throw new HttpException($guzzleException->getMessage());
         }
     }
 
@@ -191,7 +193,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
 
             // Define the headers
             $headers = [
-                'Authorization' => "Bearer {$this->credentials['token']}",
+                'Authorization' => 'Bearer '.$this->credentials['token'],
                 'Content-Type' => 'application/json',
             ];
 
@@ -214,9 +216,9 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
             // Return the order response
             return $arrayResponse;
 
-        } catch (GuzzleException $e) {
+        } catch (GuzzleException $guzzleException) {
             // Handle exceptions
-            throw new HttpException($e->getMessage());
+            throw new HttpException($guzzleException->getMessage());
         }
     }
 
@@ -231,7 +233,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
 
             // Define the headers
             $headers = [
-                'Authorization' => "Bearer {$this->credentials['token']}",
+                'Authorization' => 'Bearer '.$this->credentials['token'],
             ];
 
             // Make the GET request
@@ -254,7 +256,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
             // Get the response body
             $label = $response->getBody()->getContents();
 
-            if (empty($label)) {
+            if ($label === '' || $label === '0') {
                 throw new HttpException('Failed to retrieve label for order with tracking ID '.$orderId.' - Empty response from Ecotrack');
             }
 
@@ -270,9 +272,9 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
                 'data' => $base64data,
             ];
 
-        } catch (GuzzleException $e) {
+        } catch (GuzzleException $guzzleException) {
             // Handle exceptions
-            throw new HttpException($e->getMessage());
+            throw new HttpException($guzzleException->getMessage());
         }
     }
 

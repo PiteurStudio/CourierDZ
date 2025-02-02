@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'required' => 'is required.',
     'string' => 'must be a string.',
