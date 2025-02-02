@@ -37,6 +37,7 @@
         "laravel/pint": "^1.20.0",
         "mockery/mockery": "^1.6",
         "pestphp/pest": "^2.20 || ^3.0",
+        "php-coveralls/php-coveralls": "^2.7.0",
         "phpstan/phpstan": "^2.0",
         "spatie/ray": "^1.28"
     },
@@ -55,7 +56,6 @@
         "test:unit": "pest --coverage --min=25",
         "test:lint": "pint --test",
         "test:types": "phpstan",
-        "test:report": "pest --coverage --coverage-html coverage",
         "test": [
             "@test:unit",
             "@test:lint",
