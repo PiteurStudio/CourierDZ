@@ -34,9 +34,9 @@
         "illuminate/validation": "^9|^10|^11"
     },
     "require-dev": {
-        "laravel/pint": "^1.0",
+        "laravel/pint": "^1.20.0",
         "mockery/mockery": "^1.6",
-        "pestphp/pest": "^1.0|^2.0|^3.0",
+        "pestphp/pest": "^2.20 || ^3.0",
         "phpstan/phpstan": "^2.0",
         "spatie/ray": "^1.28"
     },
