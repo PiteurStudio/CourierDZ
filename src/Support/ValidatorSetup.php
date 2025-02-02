@@ -23,11 +23,11 @@ class ValidatorSetup
 
         // Step 2: Create a FileLoader instance to load language files
         // The FileLoader is responsible for loading language files from the specified directory
-        $loader = new FileLoader(new Filesystem, $langPath);
+        $fileLoader = new FileLoader(new Filesystem, $langPath);
 
         // Step 3: Create a Translator instance with the loader and locale
         // The Translator is responsible for translating text using the loaded language files
-        $translator = new Translator($loader, $locale);
+        $translator = new Translator($fileLoader, $locale);
 
         // Step 4: Create and return a ValidatorFactory instance
         // The ValidatorFactory is the main entry point for the validation process

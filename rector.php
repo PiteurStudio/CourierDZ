@@ -14,7 +14,7 @@ return RectorConfig::configure()
         codeQuality: true,
         codingStyle: true,
         typeDeclarations: true,
-        //        privatization: true,
-        //        naming: true,
-        //                rectorPreset: true
+        privatization: true,
+        naming: true,
+        //rectorPreset: true
     )->withPhpSets();

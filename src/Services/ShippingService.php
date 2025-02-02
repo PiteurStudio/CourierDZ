@@ -7,7 +7,7 @@ use CourierDZ\Exceptions\InvalidProviderException;
 
 class ShippingService
 {
-    private readonly ShippingProviderContract $provider;
+    private readonly ShippingProviderContract $shippingProviderContract;
 
     /**
      * Create a new ShippingService instance for the given provider.
@@ -19,7 +19,7 @@ class ShippingService
      */
     public function __construct(string $providerName, array $credentials)
     {
-        $this->provider = $this->loadProvider($providerName, $credentials);
+        $this->shippingProviderContract = $this->loadProvider($providerName, $credentials);
     }
 
     /**
@@ -74,7 +74,7 @@ class ShippingService
     public function testCredentials(): bool
     {
         // Call the provider's testCredentials method to verify the credentials.
-        return $this->provider->testCredentials();
+        return $this->shippingProviderContract->testCredentials();
     }
 
     /**
@@ -84,7 +84,7 @@ class ShippingService
      */
     public function getCreateOrderValidationRules(): array
     {
-        return $this->provider->getCreateOrderValidationRules();
+        return $this->shippingProviderContract->getCreateOrderValidationRules();
     }
 
     /**
@@ -99,7 +99,7 @@ class ShippingService
     public function validateCreate(array $orderData): bool
     {
         // Call the provider's validateCreate method to validate the order data
-        return $this->provider->validateCreate($orderData);
+        return $this->shippingProviderContract->validateCreate($orderData);
     }
 
     /**
@@ -111,7 +111,7 @@ class ShippingService
      */
     public function getRates(?int $from_wilaya_id = null, ?int $to_wilaya_id = null): array
     {
-        return $this->provider->getRates($from_wilaya_id, $to_wilaya_id);
+        return $this->shippingProviderContract->getRates($from_wilaya_id, $to_wilaya_id);
     }
 
     /**
@@ -125,7 +125,7 @@ class ShippingService
      */
     public function createOrder(array $orderData): array
     {
-        return $this->provider->createOrder($orderData);
+        return $this->shippingProviderContract->createOrder($orderData);
     }
 
     /**
@@ -139,7 +139,7 @@ class ShippingService
      */
     public function getOrder(string $trackingId): array
     {
-        return $this->provider->getOrder($trackingId);
+        return $this->shippingProviderContract->getOrder($trackingId);
     }
 
     /**
@@ -154,7 +154,7 @@ class ShippingService
     public function orderLabel(string $orderId): array
     {
         // Delegate to the provider's orderLabel method to get the order label
-        return $this->provider->orderLabel($orderId);
+        return $this->shippingProviderContract->orderLabel($orderId);
     }
 
     //    /**
@@ -182,7 +182,7 @@ class ShippingService
      */
     public function metaData(): array
     {
-        return $this->provider->metaData();
+        return $this->shippingProviderContract->metaData();
     }
 
     /**
@@ -199,14 +199,14 @@ class ShippingService
     {
         $providers = [];
 
-        $providersList = glob(__DIR__.'/../ShippingProviders/*Provider.php');
+        $providers_filenames = glob(__DIR__.'/../ShippingProviders/*Provider.php');
 
-        if ($providersList === false) {
-            $providersList = [];
+        if ($providers_filenames === false) {
+            $providers_filenames = [];
         }
 
-        foreach ($providersList as $file) {
-            $className = basename($file, '.php');
+        foreach ($providers_filenames as $provider_filename) {
+            $className = basename($provider_filename, '.php');
             $namespace = 'CourierDZ\ShippingProviders\\'.$className;
 
             // Check if the class exists and implements the ShippingProviderContract

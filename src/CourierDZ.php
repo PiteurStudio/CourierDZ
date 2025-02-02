@@ -11,14 +11,14 @@ class CourierDZ
     /**
      * Create a new ShippingService instance for the given provider.
      *
-     * @param  ShippingProvider  $provider  The provider to use
+     * @param  ShippingProvider  $shippingProvider  The provider to use
      * @param  array<non-empty-string, non-empty-string>  $credentials  The credentials to use for the provider
      *
      * @throws InvalidProviderException
      */
-    public static function provider(ShippingProvider $provider, array $credentials): ShippingService
+    public static function provider(ShippingProvider $shippingProvider, array $credentials): ShippingService
     {
-        return new ShippingService($provider->value, $credentials);
+        return new ShippingService($shippingProvider->value, $credentials);
     }
 
     /**
