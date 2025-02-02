@@ -144,7 +144,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
             $result = json_decode($body, true);
 
             // If the to_wilaya_id is specified, filter the result to only include the specified wilaya
-            if ($to_wilaya_id) {
+            if ($to_wilaya_id !== null && $to_wilaya_id !== 0) {
                 foreach ($result['livraison'] as $wilaya) {
                     if ($wilaya['wilaya_id'] == $to_wilaya_id) {
                         // Return the first matching wilaya
