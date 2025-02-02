@@ -39,6 +39,7 @@
         "pestphp/pest": "^2.20 || ^3.0",
         "php-coveralls/php-coveralls": "^2.7.0",
         "phpstan/phpstan": "^2.0",
+        "rector/rector": "^2.0",
         "spatie/ray": "^1.28"
     },
     "autoload": {
@@ -53,13 +54,16 @@
     },
     "scripts": {
         "lint": "pint",
+        "refactor": "rector",
         "test:unit": "pest --coverage --min=25",
         "test:lint": "pint --test",
+        "test:refactor": "rector --dry-run",
         "test:types": "phpstan",
         "test": [
             "@test:unit",
             "@test:lint",
-            "@test:types"
+            "@test:types",
+            "@test:refactor"
         ]
     },
     "config": {
