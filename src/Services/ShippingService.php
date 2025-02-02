@@ -38,7 +38,7 @@ class ShippingService
      */
     private function loadProvider(string $providerName, array $credentials): ShippingProviderContract
     {
-        $namespace = "CourierDZ\\ShippingProviders\\{$providerName}Provider";
+        $namespace = sprintf('CourierDZ\ShippingProviders\%sProvider', $providerName);
 
         if (! class_exists($namespace)) {
             // If the provider class does not exist, throw an exception
@@ -48,7 +48,7 @@ class ShippingService
                 $availableProvidersNames .= $provider['name'].', ';
             }
 
-            throw new InvalidProviderException("Incorrect `{$providerName}` Shipping provider name, Available providers are: ".rtrim($availableProvidersNames, ', '));
+            throw new InvalidProviderException(sprintf('Incorrect `%s` Shipping provider name, Available providers are: ', $providerName).rtrim($availableProvidersNames, ', '));
         }
 
         // Create an instance of the provider class
@@ -57,7 +57,7 @@ class ShippingService
         $providerClass = new $namespace($credentials);
 
         if (! $providerClass instanceof ShippingProviderContract) {
-            throw new InvalidProviderException("{$providerName}Provider must implement ShippingProviderContract or extend XyzProviderIntegration.");
+            throw new InvalidProviderException($providerName.'Provider must implement ShippingProviderContract or extend XyzProviderIntegration.');
         }
 
         return $providerClass;
@@ -207,7 +207,7 @@ class ShippingService
 
         foreach ($providersList as $file) {
             $className = basename($file, '.php');
-            $namespace = "CourierDZ\\ShippingProviders\\{$className}";
+            $namespace = 'CourierDZ\ShippingProviders\\'.$className;
 
             // Check if the class exists and implements the ShippingProviderContract
             if (class_exists($namespace) && is_subclass_of($namespace, ShippingProviderContract::class)) {

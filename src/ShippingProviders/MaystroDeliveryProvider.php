@@ -82,7 +82,7 @@ class MaystroDeliveryProvider implements ShippingProviderContract
 
             // Define the headers
             $headers = [
-                'Authorization' => "Token {$this->credentials['token']}",
+                'Authorization' => 'Token '.$this->credentials['token'],
             ];
 
             // Make the GET request
@@ -100,9 +100,9 @@ class MaystroDeliveryProvider implements ShippingProviderContract
                 // If the request returns any other status code, throw an HttpException
                 default => throw new HttpException(static::metadata()['name'].', Unexpected error occurred.'),
             };
-        } catch (GuzzleException $e) {
+        } catch (GuzzleException $guzzleException) {
             // Handle exceptions
-            throw new HttpException($e->getMessage());
+            throw new HttpException($guzzleException->getMessage());
         }
     }
 

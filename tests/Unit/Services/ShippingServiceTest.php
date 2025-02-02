@@ -9,7 +9,7 @@ use CourierDZ\Exceptions\CredentialsException;
 use CourierDZ\Services\ShippingService;
 use Mockery;
 
-test('it can boot', function () {
+test('it can boot', function (): void {
 
     $service = new ShippingService(ShippingProvider::ZREXPRESS->value, ['token' => 123, 'key' => 123]);
 
@@ -17,7 +17,7 @@ test('it can boot', function () {
 
 });
 
-it('need a credentials to boot', function () {
+it('need a credentials to boot', function (): void {
 
     $courier = new CourierDZ;
 
@@ -27,7 +27,7 @@ it('need a credentials to boot', function () {
 
 })->throws(CredentialsException::class);
 
-it('need a valid credentials keys format', function () {
+it('need a valid credentials keys format', function (): void {
 
     $courier = new CourierDZ;
 
@@ -40,7 +40,7 @@ it('need a valid credentials keys format', function () {
 
 })->throws(CredentialsException::class);
 
-it('return true if credentials are valid', function () {
+it('return true if credentials are valid', function (): void {
 
     $shippingService = Mockery::mock(ShippingService::class);
     $shippingService->shouldReceive('testCredentials')->andReturn(true);
@@ -49,7 +49,7 @@ it('return true if credentials are valid', function () {
 
 });
 
-test('get create order validation rules', function () {
+test('get create order validation rules', function (): void {
 
     $courier = new CourierDZ;
 
@@ -62,7 +62,7 @@ test('get create order validation rules', function () {
 
 });
 
-test('throw error on invalid create order data', function () {
+test('throw error on invalid create order data', function (): void {
 
     $courier = new CourierDZ;
 
@@ -75,7 +75,7 @@ test('throw error on invalid create order data', function () {
 
 })->throws(CreateOrderValidationException::class);
 
-test('create order', function () {
+test('create order', function (): void {
 
     $shippingService = Mockery::mock(ShippingService::class);
     $shippingService->shouldReceive('createOrder')->andReturn([]);
@@ -84,13 +84,13 @@ test('create order', function () {
 
 });
 
-test('get order', function () {})->skip(); // @todo
+test('get order', function (): void {})->skip(); // @todo
 
-test('cancel order', function () {})->skip(); // @todo
+test('cancel order', function (): void {})->skip(); // @todo
 
-test('order label', function () {})->skip(); // @todo
+test('order label', function (): void {})->skip(); // @todo
 
-it('return array for getRates', function () {
+it('return array for getRates', function (): void {
 
     $shippingService = Mockery::mock(ShippingService::class);
     $shippingService->shouldReceive('getRates')->andReturn([]);
@@ -99,14 +99,14 @@ it('return array for getRates', function () {
 
 });
 
-test('get providers', function () {
+test('get providers', function (): void {
 
     $providers = CourierDZ::providers();
 
     expect($providers)->toBeArray();
 });
 
-test('meta data', function () {
+test('meta data', function (): void {
 
     $courier = new CourierDZ;
 
