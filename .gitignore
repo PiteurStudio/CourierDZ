@@ -31,3 +31,4 @@ testbench.yaml
 /docs
 /coverage
 /demo
+.coveralls.yml

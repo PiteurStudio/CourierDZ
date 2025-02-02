@@ -1,8 +1,12 @@
 <img src="https://banners.beyondco.de/CourierDZ.png?theme=light&packageManager=composer+require&packageName=piteurstudio%2Fcourierdz&pattern=architect&style=style_1&description=Simplify+the+integration+of+Algerian+shipping+providers+into+your+applications&md=1&showWatermark=1&fontSize=100px&images=https%3A%2F%2Fwww.php.net%2Fimages%2Flogos%2Fnew-php-logo.svg&widths=300&heights=auto" alt="CourierDZ Banner" />
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/piteurstudio/courierdz.svg?style=flat-square)](https://packagist.org/packages/piteurstudio/courierdz)
-[![Tests](https://img.shields.io/github/actions/workflow/status/piteurstudio/courierdz/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/piteurstudio/courierdz/actions/workflows/run-tests.yml)
-[![Total Downloads](https://img.shields.io/packagist/dt/piteurstudio/courierdz.svg?style=flat-square)](https://packagist.org/packages/piteurstudio/courierdz)
+<p align="center">
+    <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-8.2-777BB4?logo=php" alt="PHP 8.2"></a>
+    <a href="https://packagist.org/packages/piteurstudio/courierdz"><img src="https://img.shields.io/packagist/v/piteurstudio/courierdz.svg?style=flat-square" alt="Latest Version on Packagist"></a>
+    <a href="https://github.com/piteurstudio/courierdz/actions/workflows/run-tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/piteurstudio/courierdz/run-tests.yml?branch=main&amp;label=tests&amp;style=flat-square" alt="Tests"></a>
+    <a href="https://coveralls.io/github/PiteurStudio/CourierDZ?branch=main"><img src="https://coveralls.io/repos/github/PiteurStudio/CourierDZ/badge.svg?branch=main" alt="Coverage Status"></a>
+    <a href="https://packagist.org/packages/piteurstudio/courierdz"><img src="https://img.shields.io/packagist/dt/piteurstudio/courierdz.svg?style=flat-square" alt="Total Downloads"></a>
+</p>
 
 # CourierDZ
 

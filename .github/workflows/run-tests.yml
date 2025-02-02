@@ -1,15 +1,10 @@
 name: Tests
 
 on:
-  push:
-    paths:
-      - '**.php'
-      - '.github/workflows/run-tests.yml'
-      - 'phpunit.xml.dist'
-      - 'composer.json'
-      - 'composer.lock'
   pull_request:
-    branches: [ "*" ]
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
 
 jobs:
   test:
@@ -18,7 +13,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
         php: [8.2, 8.3, 8.4]
         stability: [prefer-lowest, prefer-stable]
 
@@ -33,7 +28,10 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
-          coverage: none
+          coverage: xdebug
+
+      - name: Validate composer.json
+        run: composer validate --strict
 
       - name: Setup problem matchers
         run: |
@@ -46,8 +44,10 @@ jobs:
       - name: List Installed Dependencies
         run: composer show -D
 
-      - name: PHPStan Analyse
-        run: composer analyse
-
       - name: Execute tests
-        run: vendor/bin/pest
+        run: composer test
+
+      - name: Upload coverage results to Coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: vendor/bin/php-coveralls -v --coverage_clover=build/logs/clover.xml

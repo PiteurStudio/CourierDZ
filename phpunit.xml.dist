@@ -16,7 +16,7 @@
     backupStaticProperties="false"
 >
     <testsuites>
-        <testsuite name="PiteurStudio Test Suite">
+        <testsuite name="Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
