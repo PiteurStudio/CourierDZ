@@ -106,7 +106,7 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
             ];
 
             // Make the GET request
-            $response = $client->request('GET', $this->apiDomain().'/v1/wilayas/', [
+            $response = $client->request('GET', static::apiDomain().'/v1/wilayas/', [
                 'headers' => $headers,
             ]);
 
@@ -149,7 +149,7 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
             ];
 
             // Make the GET request
-            $response = $client->request('GET', $this->apiDomain().'/v1/fees/?from_wilaya_id='.$from_wilaya_id.'&to_wilaya_id='.$to_wilaya_id, [
+            $response = $client->request('GET', static::apiDomain().'/v1/fees/?from_wilaya_id='.$from_wilaya_id.'&to_wilaya_id='.$to_wilaya_id, [
                 'headers' => $headers,
             ]);
 
@@ -191,7 +191,7 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
                 throw new CreateOrderException('Create Order failed : JSON encoding error');
             }
 
-            $request = new Request('POST', $this->apiDomain().'/v1/parcels/', $headers, $requestBody);
+            $request = new Request('POST', static::apiDomain().'/v1/parcels/', $headers, $requestBody);
 
             $response = $client->send($request);
 

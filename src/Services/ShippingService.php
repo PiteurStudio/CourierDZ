@@ -7,7 +7,7 @@ use CourierDZ\Exceptions\InvalidProviderException;
 
 class ShippingService
 {
-    private ShippingProviderContract $provider;
+    private readonly ShippingProviderContract $provider;
 
     /**
      * Create a new ShippingService instance for the given provider.

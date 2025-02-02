@@ -95,24 +95,20 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
             ];
 
             // Make the GET request
-            $response = $client->request('GET', $this->apiDomain().'api/v1/get/wilayas', [
+            $response = $client->request('GET', static::apiDomain().'api/v1/get/wilayas', [
                 'headers' => $headers,
                 'Content-Type' => 'application/json',
             ]);
 
             // Check the status code
-            switch ($response->getStatusCode()) {
-                case 200:
-                    // If the request is successful, return true
-                    return true;
-                case 401:
-                case 403:
-                    // If the request returns a 401 or 403 status code, return false
-                    return false;
-                default:
-                    // If the request returns any other status code, throw an HttpException
-                    throw new HttpException('Ecotrack '.$this->metadata()['name'].', Unexpected error occurred.');
-            }
+            return match ($response->getStatusCode()) {
+                // If the request is successful, return true
+                200 => true,
+                // If the request returns a 401 or 403 status code, return false
+                401, 403 => false,
+                // If the request returns any other status code, throw an HttpException
+                default => throw new HttpException('Ecotrack '.static::metadata()['name'].', Unexpected error occurred.'),
+            };
         } catch (GuzzleException $e) {
             // Handle exceptions
             throw new HttpException($e->getMessage());
@@ -134,7 +130,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
             ];
 
             // Make the GET request
-            $response = $client->request('GET', $this->apiDomain().'api/v1/get/fees', [
+            $response = $client->request('GET', static::apiDomain().'api/v1/get/fees', [
                 'headers' => $headers,
                 'Content-Type' => 'application/json',
             ]);
@@ -200,7 +196,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
             ];
 
             // Make the POST request
-            $request = new Request('POST', $this->apiDomain().'api/v1/create/order', $headers, $requestBody);
+            $request = new Request('POST', static::apiDomain().'api/v1/create/order', $headers, $requestBody);
 
             $response = $client->send($request);
 
@@ -239,7 +235,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
             ];
 
             // Make the GET request
-            $response = $client->request('GET', $this->apiDomain().'api/v1/get/order/label?tracking='.$orderId, [
+            $response = $client->request('GET', static::apiDomain().'api/v1/get/order/label?tracking='.$orderId, [
                 'headers' => $headers,
                 'Content-Type' => 'application/json',
             ]);

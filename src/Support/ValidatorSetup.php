@@ -19,7 +19,7 @@ class ValidatorSetup
     public static function makeValidator(?string $langPath = null, string $locale = 'fr'): ValidatorFactory
     {
         // Step 1: Set default language files directory
-        $langPath = $langPath ?? __DIR__.'/lang';
+        $langPath ??= __DIR__.'/lang';
 
         // Step 2: Create a FileLoader instance to load language files
         // The FileLoader is responsible for loading language files from the specified directory

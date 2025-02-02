@@ -92,18 +92,14 @@ class MaystroDeliveryProvider implements ShippingProviderContract
             ]);
 
             // Check the status code
-            switch ($response->getStatusCode()) {
-                case 200:
-                    // If the request is successful, return true
-                    return true;
-                case 401:
-                case 403:
-                    // If the request returns a 401 or 403 status code, return false
-                    return false;
-                default:
-                    // If the request returns any other status code, throw an HttpException
-                    throw new HttpException($this->metadata()['name'].', Unexpected error occurred.');
-            }
+            return match ($response->getStatusCode()) {
+                // If the request is successful, return true
+                200 => true,
+                // If the request returns a 401 or 403 status code, return false
+                401, 403 => false,
+                // If the request returns any other status code, throw an HttpException
+                default => throw new HttpException(static::metadata()['name'].', Unexpected error occurred.'),
+            };
         } catch (GuzzleException $e) {
             // Handle exceptions
             throw new HttpException($e->getMessage());

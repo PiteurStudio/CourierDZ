@@ -100,17 +100,14 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
             $data = json_decode($body, true);
 
             // Check the status code
-            switch ($response->getStatusCode()) {
-                case 200:
-                    // If the request is successful, return true
-                    return $data['Statut'] === 'Accès activé';
-                case 401:
-                    // If the request returns a 401 status code, return false
-                    return false;
-                default:
-                    // If the request returns any other status code, throw an HttpException
-                    throw new HttpException('Procolis, Unexpected error occurred.');
-            }
+            return match ($response->getStatusCode()) {
+                // If the request is successful, return true
+                200 => $data['Statut'] === 'Accès activé',
+                // If the request returns a 401 status code, return false
+                401 => false,
+                // If the request returns any other status code, throw an HttpException
+                default => throw new HttpException('Procolis, Unexpected error occurred.'),
+            };
         } catch (GuzzleException $e) {
             // Handle exceptions
             throw new HttpException($e->getMessage());
