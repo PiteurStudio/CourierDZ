@@ -23,9 +23,22 @@ class MaystroDeliveryProvider implements ShippingProviderContract
 
     /**
      * Validation rules for creating an order
+     *
+     * @var array<non-empty-string, non-empty-string>
      */
     public array $getCreateOrderValidationRules = [
-
+        'wilaya' => 'required|integer|min:1|max:58',
+        'commune' => 'required|integer|min:1',
+        'destination_text' => 'nullable|string|max:255',
+        'customer_phone' => 'required|numeric|digits_between:9,10',
+        'customer_name' => 'required|string|max:255',
+        'product_price' => 'required|integer',
+        'delivery_type' => 'required|integer|in:0,1', // 0 = Livraison à domicile , 1 = Point de retrait
+        'express' => 'boolean',
+        'note_to_driver' => 'nullable|string|max:255',
+        'products' => 'required|array',
+        'source' => 'required|equals:4',
+        'external_order_id' => 'nullable|string|max:255',
     ];
 
     /**
@@ -58,10 +71,15 @@ class MaystroDeliveryProvider implements ShippingProviderContract
             'logo' => 'https://maystro-delivery.com/img/Maystro-blue-extonly.svg',
             'description' => 'Maystro Delivery société de livraison en Algérie offre un service de livraison rapide et sécurisé .',
             'website' => 'https://maystro-delivery.com/',
-            'api_docs' => null,
+            'api_docs' => 'https://maystro.gitbook.io/maystro-delivery-documentation',
             'support' => 'https://maystro-delivery.com/ContactUS.html',
             'tracking_url' => 'https://maystro-delivery.com/trackingSD.html',
         ];
+    }
+
+    public static function apiDomain(): string
+    {
+        return 'https://backend.maystro-delivery.com/api/';
     }
 
     /**
@@ -88,7 +106,7 @@ class MaystroDeliveryProvider implements ShippingProviderContract
             ];
 
             // Make the GET request
-            $response = $client->request('GET', 'https://b.maystro-delivery.com/api/base/wilayas/?country=1', [
+            $response = $client->request('GET', static::apiDomain().'base/wilayas/?country=1', [
                 'headers' => $headers,
                 'Content-Type' => 'application/json',
             ]);
@@ -96,9 +114,9 @@ class MaystroDeliveryProvider implements ShippingProviderContract
             // Check the status code
             return match ($response->getStatusCode()) {
                 // If the request is successful, return true
-                200 => true,
-                // If the request returns a 401 or 403 status code, return false
-                401, 403 => false,
+                200, 201 => true,
+                // If the request returns a 401 status code, return false
+                401 => false,
                 // If the request returns any other status code, throw an HttpException
                 default => throw new HttpException(static::metadata()['name'].', Unexpected error occurred.'),
             };
@@ -108,6 +126,9 @@ class MaystroDeliveryProvider implements ShippingProviderContract
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getRates(?int $from_wilaya_id, ?int $to_wilaya_id): array
     {
         throw new NotImplementedException('Not implemented');
@@ -118,23 +139,156 @@ class MaystroDeliveryProvider implements ShippingProviderContract
         return $this->getCreateOrderValidationRules;
     }
 
+    public function createProduct(string $store_id, string $logistical_description, ?string $product_id): array
+    {
+        $productData = [
+            'store_id' => $store_id,
+            'logistical_description' => $logistical_description,
+        ];
+
+        if ($product_id !== null && $product_id !== '' && $product_id !== '0') {
+            $productData['product_id'] = $product_id;
+        }
+
+        try {
+            // Initialize Guzzle client
+            $client = new Client(['http_errors' => false]);
+
+            // Define the headers
+            $headers = [
+                'Authorization' => 'Token '.$this->credentials['token'],
+            ];
+
+            // Make the GET request
+            $response = $client->request('POST', static::apiDomain().'stores/product/', [
+                'headers' => $headers,
+                'body' => $productData,
+            ]);
+
+            if ($response->getStatusCode() == 200) {
+                return json_decode($response->getBody()->getContents(), true);
+            }
+
+            throw new HttpException(static::metadata()['name'].', Unexpected error occurred.');
+        } catch (GuzzleException $guzzleException) {
+            // Handle exceptions
+            throw new HttpException($guzzleException->getMessage());
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function createOrder(array $orderData): array
     {
-        throw new NotImplementedException('Not implemented');
+        // Validate the order data
+        $this->validateCreate($orderData);
+
+        try {
+            // Initialize Guzzle client
+            $client = new Client(['http_errors' => false]);
+
+            // Define the headers
+            $headers = [
+                'Authorization' => 'Token '.$this->credentials['token'],
+            ];
+
+            // Make the GET request
+            $response = $client->request('POST', static::apiDomain().'stores/orders/', [
+                'headers' => $headers,
+                'body' => $orderData,
+            ]);
+
+            if (in_array($response->getStatusCode(), [200, 201])) {
+                return json_decode($response->getBody()->getContents(), true);
+            }
+
+            throw new HttpException(static::metadata()['name'].', Unexpected error occurred.');
+        } catch (GuzzleException $guzzleException) {
+            // Handle exceptions
+            throw new HttpException($guzzleException->getMessage());
+        }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getOrder(string $trackingId): array
     {
-        throw new NotImplementedException('Not implemented');
+        $orderId = $trackingId;
+
+        try {
+            // Initialize Guzzle client
+            $client = new Client(['http_errors' => false]);
+
+            // Define the headers
+            $headers = [
+                'Authorization' => 'Token '.$this->credentials['token'],
+            ];
+
+            // Make the GET request
+            $response = $client->request('GET', static::apiDomain().'stores/orders/'.$orderId.'/', [
+                'headers' => $headers,
+            ]);
+
+            if (in_array($response->getStatusCode(), [200, 201])) {
+                return json_decode($response->getBody()->getContents(), true);
+            }
+
+            throw new HttpException(static::metadata()['name'].', Unexpected error occurred.');
+        } catch (GuzzleException $guzzleException) {
+            // Handle exceptions
+            throw new HttpException($guzzleException->getMessage());
+        }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function orderLabel(string $orderId): array
     {
-        throw new NotImplementedException('Not implemented');
-    }
+        try {
+            // Initialize Guzzle client
+            $client = new Client(['http_errors' => false]);
 
-    public function validateCreate(array $data): bool
-    {
-        throw new NotImplementedException('Not implemented');
+            // Define the headers
+            $headers = [
+                'Authorization' => 'Token '.$this->credentials['token'],
+            ];
+
+            // Make the GET request
+            $response = $client->request('POST', static::apiDomain().'delivery/starter/starter_bordureau/', [
+                'headers' => $headers,
+                'body' => [
+                    'all_created' => true,
+                    'orders_ids' => [$orderId],
+                ],
+            ]);
+
+            if (in_array($response->getStatusCode(), [200, 201])) {
+
+                $label = $response->getBody()->getContents();
+
+                if ($label === '' || $label === '0') {
+                    throw new HttpException('Failed to retrieve label for order with tracking ID '.$orderId.' - Empty response from Maystro Delivery API.');
+                }
+
+                $base64data = base64_encode($label);
+
+                if ($base64data === '') {
+                    throw new \RuntimeException('Unexpected empty base64 string');
+                }
+
+                return [
+                    'type' => 'pdf',
+                    'data' => $base64data,
+                ];
+            }
+
+            throw new HttpException(static::metadata()['name'].', Unexpected error occurred.');
+        } catch (GuzzleException $guzzleException) {
+            // Handle exceptions
+            throw new HttpException($guzzleException->getMessage());
+        }
     }
 }

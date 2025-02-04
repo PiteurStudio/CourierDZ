@@ -1,29 +1,28 @@
 <img src="https://banners.beyondco.de/CourierDZ.png?theme=light&packageManager=composer+require&packageName=piteurstudio%2Fcourierdz&pattern=architect&style=style_1&description=Simplify+the+integration+of+Algerian+shipping+providers+into+your+applications&md=1&showWatermark=1&fontSize=100px&images=https%3A%2F%2Fwww.php.net%2Fimages%2Flogos%2Fnew-php-logo.svg&widths=300&heights=auto" alt="CourierDZ Banner" />
 
 <p align="center">
-    <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-8.2-777BB4?logo=php" alt="PHP 8.2"></a>
-    <a href="https://packagist.org/packages/piteurstudio/courierdz"><img src="https://img.shields.io/packagist/v/piteurstudio/courierdz.svg?style=flat-square" alt="Latest Version on Packagist"></a>
-    <a href="https://github.com/piteurstudio/courierdz/actions/workflows/run-tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/piteurstudio/courierdz/run-tests.yml?branch=main&amp;label=tests&amp;style=flat-square" alt="Tests"></a>
+    <a href="https://php.net"><img src="https://poser.pugx.org/piteurstudio/CourierDZ/require/php" alt="PHP 8.2"></a>
+    <a href="https://packagist.org/packages/piteurstudio/courierdz"><img src="https://img.shields.io/packagist/v/piteurstudio/courierdz.svg" alt="Latest Version on Packagist"></a>
+    <a href="https://github.com/piteurstudio/courierdz/actions/workflows/run-tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/piteurstudio/courierdz/run-tests.yml?branch=main&amp;label=tests" alt="Tests"></a>
     <a href="https://coveralls.io/github/PiteurStudio/CourierDZ?branch=main"><img src="https://coveralls.io/repos/github/PiteurStudio/CourierDZ/badge.svg?branch=main" alt="Coverage Status"></a>
-    <a href="https://packagist.org/packages/piteurstudio/courierdz"><img src="https://img.shields.io/packagist/dt/piteurstudio/courierdz.svg?style=flat-square" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/piteurstudio/courierdz"><img src="https://img.shields.io/packagist/dt/piteurstudio/courierdz.svg" alt="Total Downloads"></a>
+    <a href="https://github.com/PiteurStudio/CourierDZ/tree/main/src/ShippingProviders"><img src="https://img.shields.io/badge/Supported_providers-6-blue" alt="Supported providers"></a>
 </p>
 
 # CourierDZ
 
 CourierDZ is a PHP client designed to simplify the integration of Algerian shipping providers into your applications. 
-Whether you're working on an e-commerce platform or logistics solution, CourierDZ provides a unified and easy-to-use interface for managing orders, tracking shipments, and more.
+Whether you're working on an e-commerce platform or logistics solution, and provides a unified and easy-to-use interface for managing orders, tracking shipments.
 
 ## Features
 
 - **Multi-Provider Support**: Integrate with popular Algerian shipping services such as:
-    - Procolis ( Zr Express , <s>E-Com Delivery, Abex Express , Flash Delivery, E-Send , WIN DELIVERY , COLILOG EXPRESS, GODYMA EXPRESS , LETS GO DELIVERY, LEOPARD EXPRESS , MR LIVREUR, EL AMANA DELIVERY, ALLO LIVRAISON, COLIRELI</s> )
-    - Yalidine ( Yalitec <s>, [GuepEX](https://guepex.app/app/login.php) , [Zimou Express](https://zimou-express.app/app/login.php)</s> )
-    - Ecotrack ( DHD , Conexlog (UPS)  )
-    - <s>Mayesto Delivery</s>
-    - <s>[Elogistia](https://documenter.getpostman.com/view/21600448/2s8YzP14j2) </s>
-    - And more to come!
+    - `Yalidine` , `Yalitec`
+    - `Mayesto Delivery`
+    - `Procolis` ( `Zr Express` )
+    - `Ecotrack` ( `DHD` , `Conexlog/UPS`  )
 - **Unified API**: A consistent interface to interact with all supported providers.
-- <s>**Order Management**: Create, update, and cancel shipping orders effortlessly.</s>
+- **Order Management**: Create, update, and cancel shipping orders effortlessly.
 - **Extensible Design**: Easily add new providers or customize existing ones.
 
 
@@ -42,18 +41,19 @@ composer require piteurstudio/courierdz
 ```
 
 ### Current Supported Methods
-| **Provider/Feature**                        | **Yalidine** | **Procolis** | **Ecotrack** | **Mayesto Delivery** |
+| **Provider/Feature**                        | **Yalidine** | **Procolis** | **Ecotrack** | **Maystro Delivery** |
 |---------------------------------------------|--------------|--------------|--------------|----------------------|
 | testCredentials                             | ✅            | ✅            | ✅            | ✅                    |
 | getRates                                    | ❌            | ✅            | ✅            | ❔                    |
-| getRates(null , \$to_wilaya_id)             | ❌            | ✅            | ✅            | ❔                    |
-| getRates(\$from_wilaya_id , \$to_wilaya_id) | ✅            | ❌            | ❌            | ❔                    |
-| getCreateValidationRules                    | ✅            | ✅            | ✅            | ❔                    |
-| createOrder                                 | ✅            | ✅            | ✅            | ❔                    |
-| getOrder                                    | ✅            | ✅            | ❔            | ❔                    |
+| getRates(null , \$to_wilaya_id)             | ❌            | ✅            | ✅            | ❌                    |
+| getRates(\$from_wilaya_id , \$to_wilaya_id) | ✅            | ❌            | ❌            | ❌                    |
+| getCreateValidationRules                    | ✅            | ✅            | ✅            | ✅                    |
+| createOrder                                 | ✅            | ✅            | ✅            | ✅                    |
+| getOrder                                    | ✅            | ✅            | ❔            | ✅                    |
 | updateOrder                                 | ❔            | ❔            | ❔            | ❔                    |
 | cancelOrder                                 | ❔            | ❔            | ❔            | ❔                    |
-| orderLabel                                  | ✅            | ❌            | ✅            | ❔                    |
+| orderLabel                                  | ✅            | ❌            | ✅            | ✅                    |
+| createProduct                               | ❌            | ❌            | ❌            | ✅                    |
 
  - ✅ Implemented
  - ❌ Unsupported by the provider
@@ -246,6 +246,12 @@ We appreciate your feedback and contributions to help improve this package.
 - API Documentation
 - Any other relevant information
 
+### Future Planned Features
+- [ ] Add more providers ( eg : [Elogistia](https://documenter.getpostman.com/view/21600448/2s8YzP14j2), E-Com Delivery, Abex Express , Flash Delivery, E-Send , WIN DELIVERY , COLILOG EXPRESS, GODYMA EXPRESS , LETS GO DELIVERY, LEOPARD EXPRESS , MR LIVREUR, EL AMANA DELIVERY, ALLO LIVRAISON, COLIRELI , Yalitec , [GuepEX](https://guepex.app/app/login.php) , [Zimou Express](https://zimou-express.app/app/login.php))
+- [ ] Add more methods
+- [ ] Add more tests
+- [ ] Add more examples
+- [ ] Add more documentation
 
 ## Changelog
 
