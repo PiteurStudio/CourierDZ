@@ -2,6 +2,21 @@
 
 All notable changes to `CourierDZ` will be documented in this file.
 
+## v0.2 - 2025-02-04
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot in https://github.com/PiteurStudio/CourierDZ/pull/8
+* improve composer test scripts by @n4ss1m in https://github.com/PiteurStudio/CourierDZ/pull/9
+* Refactor: Enable Rector Rules for Code Quality and Strictness by @n4ss1m in https://github.com/PiteurStudio/CourierDZ/pull/10
+* features: support more methods for Maystro Delivery by @n4ss1m in https://github.com/PiteurStudio/CourierDZ/pull/11
+
+### New Contributors
+
+* @dependabot made their first contribution in https://github.com/PiteurStudio/CourierDZ/pull/8
+
+**Full Changelog**: https://github.com/PiteurStudio/CourierDZ/compare/v0.1.16...v0.2
+
 ## v0.1.16 - 2024-12-29
 
 ### What's Changed
