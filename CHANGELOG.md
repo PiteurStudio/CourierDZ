@@ -2,6 +2,14 @@
 
 All notable changes to `CourierDZ` will be documented in this file.
 
+## v0.2.1 - 2025-02-07
+
+### What's Changed
+
+* Refactor Types, Enhance Docs & Add 20 Ecotrack Providers by @n4ss1m in https://github.com/PiteurStudio/CourierDZ/pull/12
+
+**Full Changelog**: https://github.com/PiteurStudio/CourierDZ/compare/v0.2...v0.2.1
+
 ## v0.2 - 2025-02-04
 
 ### What's Changed
