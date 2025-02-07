@@ -6,7 +6,7 @@
     <a href="https://github.com/piteurstudio/courierdz/actions/workflows/run-tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/piteurstudio/courierdz/run-tests.yml?branch=main&amp;label=tests" alt="Tests"></a>
     <a href="https://coveralls.io/github/PiteurStudio/CourierDZ?branch=main"><img src="https://coveralls.io/repos/github/PiteurStudio/CourierDZ/badge.svg?branch=main" alt="Coverage Status"></a>
     <a href="https://packagist.org/packages/piteurstudio/courierdz"><img src="https://img.shields.io/packagist/dt/piteurstudio/courierdz.svg" alt="Total Downloads"></a>
-    <a href="https://github.com/PiteurStudio/CourierDZ/tree/main/src/ShippingProviders"><img src="https://img.shields.io/badge/Supported_providers-6-blue" alt="Supported providers"></a>
+    <a href="https://github.com/PiteurStudio/CourierDZ/tree/main/src/ShippingProviders"><img src="https://img.shields.io/badge/Supported_providers-26-blue" alt="Supported providers"></a>
 </p>
 
 # CourierDZ
@@ -20,7 +20,7 @@ Whether you're working on an e-commerce platform or logistics solution, and prov
     - `Yalidine` , `Yalitec`
     - `Mayesto Delivery`
     - `Procolis` ( `Zr Express` )
-    - `Ecotrack` ( `DHD` , `Conexlog/UPS`  )
+    - `Ecotrack` ( `DHD` , `Conexlog/UPS` and many more...  )
 - **Unified API**: A consistent interface to interact with all supported providers.
 - **Order Management**: Create, update, and cancel shipping orders effortlessly.
 - **Extensible Design**: Easily add new providers or customize existing ones.
