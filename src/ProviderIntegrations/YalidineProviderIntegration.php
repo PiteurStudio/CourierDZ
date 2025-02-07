@@ -132,6 +132,7 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
 
     /**
      * Get rates
+     *
      * @throws HttpException
      */
     public function getRates(?int $from_wilaya_id = null, ?int $to_wilaya_id = null): array

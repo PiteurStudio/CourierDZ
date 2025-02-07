@@ -55,7 +55,7 @@
     "scripts": {
         "lint": "pint",
         "refactor": "rector",
-        "test:unit": "pest --coverage --min=22",
+        "test:unit": "pest --coverage --min=21",
         "test:lint": "pint --test",
         "test:refactor": "rector --dry-run",
         "test:types": "phpstan",

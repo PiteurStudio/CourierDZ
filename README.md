@@ -64,95 +64,31 @@ composer require piteurstudio/courierdz
 
 ## Usage
 
-### List Available Providers
+### Initialize the shipping provider and set your credentials.
 
 ```php
-use CourierDZ\CourierDZ;
-    
-$providersMetaData = CourierDZ::providers();
+
+// Ecotrack providers
+$credentials = ['token' => '****'];
+
+// Procolis providers ( ZREXPRESS )
+$credentials = ['id' => '****', 'token' => '****'];
+
+// Yalidine providers
+$credentials = ['token' => '****', 'key' => '****'];
+
+// Mayestro Delivery providers
+$credentials = ['token' => '****'];
+
+
+$shipping_provider = CourierDZ::provider(ShippingProvider::ZREXPRESS, $credentials);
+
+// or 
+
+$shipping_provider = new XyzProvider($credentials); // where Xyz is the provider name
 ```
 
-***Output :***
-
-![image](https://github.com/user-attachments/assets/a4453395-4304-4932-8190-5b49af40eab5)
-
-
-
-### Setup
-
-```php
-/*
- * Provider name can be one of the following: `ShippingProvider::ZREXPRESS` ( check ShippingProvider class for more information )
- * ------------------------------------------------------------------------------
- * For example, to setup a shipping service for Procolis ( ZREXPRESS ), 
- * you need to provide an array of credentials like this: ['token' => '****', 'key' => '****']
- * 
- * For Ecotrack, you only need to provide a token like this: ['token' => '****']
- * For Yalidine you need to provide an id & token like this:  [ 'id' => '****', 'token' => '****']
- * 
- * Check ShippingProvider class for more information.
- */
- 
-$shippingProvider = CourierDZ::provider(ShippingProvider::ZREXPRESS, $credentials);
-```
-
-### Get Shipping Provider Metadata
-
-```php
-$metadata = $shippingProvider->metadata();
-```
-
-***Output :***
-
-![image](https://github.com/user-attachments/assets/8f109f88-4932-40c2-b13d-1dae7d0df1e4)
-
-
-### Validate Credentials
-
-```php
-/*
- * Check if the provided credentials are valid.
- * 
- * return bool
- */
- 
-echo $shippingProvider->testCredentials() ? 'Valid.' : 'Invalid.';
-```
-
-### Get Rates
-
-```php
-/*
- * return array of rates of shipping from one wilaya to another 
- * or all rates depending on the parameters / provider api.
- */
- 
-$rates = $shippingProvider->getRates();  // all rates
-
-$rates = $shippingProvider->getRates(null , $to_wilaya_id); // rates to specific wilaya
-        
-$rates = $shippingProvider->getRates($from_wilaya_id , $to_wilaya_id); // Yalidine require $from_wilaya_id , $to_wilaya_id
-```
-
-### Order Management
-
-#### - Get Create Validation Rules
-
-```php
-/*
- * usefull for form validation and which fields are required to create a new order
- * Note : results may vary depending on the provider
- */
- 
-$orderCreationRules = $shippingProvider->getCreateOrderValidationRules();
-```
-
-***Output :***
-
-![image](https://github.com/user-attachments/assets/8049a9f1-c294-4714-ad56-8a28e4a2339a)
-
-
-#### - Create Order
+### Create a parcel ( order )
 
 ```php
 /*
@@ -160,7 +96,7 @@ $orderCreationRules = $shippingProvider->getCreateOrderValidationRules();
  * Note : results may vary depending on the provider
  */
  
-$result = $shippingProvider->createOrder([
+$result = $shipping_provider->createOrder([
         'Tracking' => 'CourierDz-123',
         'TypeLivraison' => 1,
         'TypeColis' => 0,
@@ -178,26 +114,20 @@ $result = $shippingProvider->createOrder([
         "Source" => 'CourierDz',
     ]))
 ```
-
-#### - Get Order
-
-```php  
-/*
- * return array of order details 
- * Note : results may vary depending on the provider
- */
- 
-$result = $shippingService->getOrder('CourierDz-123');
+To know the required fields for the order creation depend on the provider requirements, use 
+```php
+$rules = $shipping_provider->getCreateOrderValidationRules();
 ```
 
-#### - Order Label
+
+### Retrieving a label ( order )
 
 ```php
 /*
  * return array of label data ( base64 encoded string or url )
  */
  
-$label = $shippingProvider->orderLabel('CourierDz-123');
+$label = $shipping_provider->orderLabel('CourierDz-123');
 ```
 
 ***Output :***
@@ -212,10 +142,9 @@ $label = $shippingProvider->orderLabel('CourierDz-123');
     [url] => 'https://example.com/label.pdf'
 ]
 ```
+---------------
 
-
-
---------------------
+#### **More examples and methods can be found in the [DOCUMENTATION.md](DOCUMENTATION.md) file.**
 
 ## Contribution
 
@@ -247,11 +176,11 @@ We appreciate your feedback and contributions to help improve this package.
 - Any other relevant information
 
 ### Future Planned Features
-- [ ] Add more providers ( eg : [Elogistia](https://documenter.getpostman.com/view/21600448/2s8YzP14j2), E-Com Delivery, Abex Express , Flash Delivery, E-Send , WIN DELIVERY , COLILOG EXPRESS, GODYMA EXPRESS , LETS GO DELIVERY, LEOPARD EXPRESS , MR LIVREUR, EL AMANA DELIVERY, ALLO LIVRAISON, COLIRELI , Yalitec , [GuepEX](https://guepex.app/app/login.php) , [Zimou Express](https://zimou-express.app/app/login.php))
 - [ ] Add more methods
 - [ ] Add more tests
 - [ ] Add more examples
 - [ ] Add more documentation
+- [ ] Add more shipping providers ( eg : [Elogistia](https://documenter.getpostman.com/view/21600448/2s8YzP14j2), E-Com Delivery, Abex Express , Flash Delivery, E-Send , WIN DELIVERY , COLILOG EXPRESS, GODYMA EXPRESS , LETS GO DELIVERY, LEOPARD EXPRESS , MR LIVREUR, EL AMANA DELIVERY, ALLO LIVRAISON, COLIRELI , Yalitec , [GuepEX](https://guepex.app/app/login.php) , [Zimou Express](https://zimou-express.app/app/login.php))
 
 ## Changelog
 
