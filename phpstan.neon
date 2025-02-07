@@ -7,6 +7,4 @@ parameters:
     level: 8
 
     # Ignore errors in these paths
-    excludePaths:
-        - src/ShippingProviders/MaystroDeliveryProvider.php
     treatPhpDocTypesAsCertain: false

@@ -120,7 +120,7 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
     /**
      * {@inheritdoc}
      */
-    public function getRates(?int $from_wilaya_id, ?int $to_wilaya_id): array
+    public function getRates(?int $from_wilaya_id = null, ?int $to_wilaya_id = null): array
     {
         try {
             // Initialize Guzzle client
@@ -143,9 +143,23 @@ abstract class EcotrackProviderIntegration implements ShippingProviderContract
             // Decode the response body
             $result = json_decode($body, true);
 
+            if (! is_array($result) || ! array_key_exists('livraison', $result)) {
+                throw new HttpException('Ecotrack '.static::metadata()['name'].', Unexpected error occurred.');
+            }
+
             // If the to_wilaya_id is specified, filter the result to only include the specified wilaya
             if ($to_wilaya_id !== null && $to_wilaya_id !== 0) {
+
+                if (! is_array($result['livraison'])) {
+                    throw new HttpException('Ecotrack '.static::metadata()['name'].', Unexpected error occurred.');
+                }
+
                 foreach ($result['livraison'] as $wilaya) {
+
+                    if (! is_array($wilaya) || ! array_key_exists('wilaya_id', $wilaya)) {
+                        throw new HttpException('Ecotrack '.static::metadata()['name'].', Unexpected error occurred.');
+                    }
+
                     if ($wilaya['wilaya_id'] == $to_wilaya_id) {
                         // Return the first matching wilaya
                         return $wilaya;

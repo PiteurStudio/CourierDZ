@@ -132,13 +132,9 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
 
     /**
      * Get rates
-     *
-     * @param  int  $from_wilaya_id
-     * @param  int  $to_wilaya_id
-     *
      * @throws HttpException
      */
-    public function getRates($from_wilaya_id, $to_wilaya_id): array
+    public function getRates(?int $from_wilaya_id = null, ?int $to_wilaya_id = null): array
     {
         try {
             // Initialize Guzzle client
