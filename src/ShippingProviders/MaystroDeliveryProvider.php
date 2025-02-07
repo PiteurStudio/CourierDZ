@@ -18,6 +18,8 @@ class MaystroDeliveryProvider implements ShippingProviderContract
 
     /**
      * Provider credentials
+     *
+     * @var array<non-empty-string, non-empty-string>
      */
     protected array $credentials;
 
@@ -43,6 +45,8 @@ class MaystroDeliveryProvider implements ShippingProviderContract
 
     /**
      * Constructor
+     *
+     * @param  array<non-empty-string, non-empty-string>  $credentials  The provider credentials
      *
      * @throws CredentialsException
      */
@@ -129,7 +133,7 @@ class MaystroDeliveryProvider implements ShippingProviderContract
     /**
      * {@inheritdoc}
      */
-    public function getRates(?int $from_wilaya_id, ?int $to_wilaya_id): array
+    public function getRates(?int $from_wilaya_id = null, ?int $to_wilaya_id = null): array
     {
         throw new NotImplementedException('Not implemented');
     }
@@ -139,6 +143,11 @@ class MaystroDeliveryProvider implements ShippingProviderContract
         return $this->getCreateOrderValidationRules;
     }
 
+    /**
+     * @return array<non-empty-string, mixed>
+     *
+     * @throws HttpException
+     */
     public function createProduct(string $store_id, string $logistical_description, ?string $product_id): array
     {
         $productData = [

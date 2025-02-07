@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace CourierDZ\Contracts;
 
+use CourierDZ\Exceptions\HttpException;
+
 interface ShippingProviderContract
 {
     /**
@@ -32,8 +34,10 @@ interface ShippingProviderContract
      * @param  int<1, 58>|null  $from_wilaya_id  The ID of the wilaya to get rates from
      * @param  int<1, 58>|null  $to_wilaya_id  The ID of the wilaya to get rates to
      * @return array<int , mixed> An array of shipping rates, each containing the price, and wilaya IDs
+     *
+     * @throws HttpException
      */
-    public function getRates(?int $from_wilaya_id, ?int $to_wilaya_id): array;
+    public function getRates(?int $from_wilaya_id = null, ?int $to_wilaya_id = null): array;
 
     /**
      * Create a new order.
