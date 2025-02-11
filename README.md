@@ -205,11 +205,13 @@ Please review [our security policy](../../security/policy) on how to report secu
 - Before using any shipping provider, ensure it is authorized by **ARPCE**.  ( Check the approved list [here](https://www.arpce.dz/ar/service/post-sd#operators).  )
 - This package may include providers not listed by ARPCE; verify their compliance before use.
 
-## ⭐ Support Us
+## ⭐ Support
 
 If you find this package helpful, please consider giving it a ⭐ on [GitHub](https://github.com/PiteurStudio/CourierDZ) !
 Your support encourages us to keep improving the project.
 Thank you!
+
+[![Stargazers repo roster for @PiteurStudio/CourierDZ](https://reporoster.com/stars/dark/PiteurStudio/CourierDZ)](https://github.com/PiteurStudio/CourierDZ/stargazers)
 
 ## License
 
