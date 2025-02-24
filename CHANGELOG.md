@@ -2,6 +2,15 @@
 
 All notable changes to `CourierDZ` will be documented in this file.
 
+## v1.0.0 - 2025-02-24
+
+### What's Changed
+
+* docs: add Stargazers image by @n4ss1m in https://github.com/PiteurStudio/CourierDZ/pull/13
+* support laravel 12 by @n4ss1m in https://github.com/PiteurStudio/CourierDZ/pull/14
+
+**Full Changelog**: https://github.com/PiteurStudio/CourierDZ/compare/v0.2.1...v1.0.0
+
 ## v0.2.1 - 2025-02-07
 
 ### What's Changed
