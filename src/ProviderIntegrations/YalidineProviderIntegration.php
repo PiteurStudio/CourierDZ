@@ -39,19 +39,19 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
         'address' => 'required|string',
         'to_commune_name' => 'required|string',
         'to_wilaya_name' => 'required|string',
-        'product_list' => 'required|array',
-        'Price' => 'required|numeric|min:0|max:150000',
+        'product_list' => 'required|string',
+        'price' => 'required|numeric|min:0|max:150000',
         'do_insurance' => 'required|boolean',
         'declared_value' => 'required|numeric|min:0|max:150000',
-        'Length' => 'required|numeric|min:0',
-        'Width' => 'required|numeric|min:0',
-        'Height' => 'required|numeric|min:0',
-        'Weight' => 'required|numeric|min:0',
+        'length' => 'required|numeric|min:0',
+        'width' => 'required|numeric|min:0',
+        'height' => 'required|numeric|min:0',
+        'weight' => 'required|numeric|min:0',
         'freeshipping' => 'required|boolean',
         'is_stopdesk' => 'required|boolean',
         'stopdesk_id' => 'required_if:is_stopdesk,true|string',
         'has_exchange' => 'required|boolean',
-        'product_to_collect' => 'required|boolean',
+        'product_to_collect' => 'sometimes|nullable',
     ];
 
     /**
@@ -199,11 +199,11 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
 
             $arrayResponse = json_decode($body, true);
 
-            $message = $arrayResponse[$orderData['id']]['message'];
+            $message = $arrayResponse[$orderData['order_id']]['message'];
 
             // Check if the order creation was successful
-            if ($arrayResponse[$orderData['id']]['status'] !== 'true') {
-                throw new CreateOrderException('Create Order failed ( `'.$message.'` ) : '.implode(' ', $arrayResponse[$orderData['id']]));
+            if ($arrayResponse[$orderData['order_id']]['success'] != 'true') {
+                throw new CreateOrderException('Create Order failed ( `'.$message.'` ) : '.implode(' ', $arrayResponse[$orderData['order_id']]));
             }
 
             // Return the created order
