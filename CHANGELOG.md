@@ -2,6 +2,16 @@
 
 All notable changes to `CourierDZ` will be documented in this file.
 
+## v1.0.1 - 2025-09-22
+
+### What's Changed
+
+* yalidine updates by @MINOUJSS in https://github.com/PiteurStudio/CourierDZ/pull/19
+* Bump dependabot/fetch-metadata from 2.3.0 to 2.4.0 by @dependabot[bot] in https://github.com/PiteurStudio/CourierDZ/pull/15
+* Bump stefanzweifel/git-auto-commit-action from 5 to 6 by @dependabot[bot] in https://github.com/PiteurStudio/CourierDZ/pull/16
+
+**Full Changelog**: https://github.com/PiteurStudio/CourierDZ/compare/v1.0.0...v1.0.1
+
 ## v1.0.0 - 2025-02-24
 
 ### What's Changed
