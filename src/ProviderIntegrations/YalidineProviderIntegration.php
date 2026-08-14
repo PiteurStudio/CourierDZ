@@ -12,11 +12,15 @@ use CourierDZ\Exceptions\TrackingIdNotFoundException;
 use CourierDZ\Support\ShippingProviderValidation;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Psr7\Request;
 
 abstract class YalidineProviderIntegration implements ShippingProviderContract
 {
     use ShippingProviderValidation;
+
+    /**
+     * Init Guzzle Client
+     */
+    protected Client $client;
 
     /**
      * Provider credentials
@@ -73,6 +77,8 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
 
         // Set the credentials
         $this->credentials = $credentials;
+        // Set the client
+        $this->client = $this->initClient();
     }
 
     /**
@@ -98,20 +104,8 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
     public function testCredentials(): bool
     {
         try {
-            // Initialize Guzzle client
-            $client = new Client(['http_errors' => false]);
-
-            // Define the headers
-            $headers = [
-                'X-API-ID' => $this->credentials['id'],
-                'X-API-TOKEN' => $this->credentials['token'],
-            ];
-
             // Make the GET request
-            $response = $client->request('GET', static::apiDomain().'/v1/wilayas/', [
-                'headers' => $headers,
-            ]);
-
+            $response = $this->client->get('wilayas');
             // If the request is successful, the credentials are valid
             if ($response->getStatusCode() === 200) {
                 return true;
@@ -138,19 +132,8 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
     public function getRates(?int $from_wilaya_id = null, ?int $to_wilaya_id = null): array
     {
         try {
-            // Initialize Guzzle client
-            $client = new Client(['http_errors' => false]);
-
-            // Define the headers
-            $headers = [
-                'X-API-ID' => $this->credentials['id'],
-                'X-API-TOKEN' => $this->credentials['token'],
-            ];
-
             // Make the GET request
-            $response = $client->request('GET', static::apiDomain().'/v1/fees/?from_wilaya_id='.$from_wilaya_id.'&to_wilaya_id='.$to_wilaya_id, [
-                'headers' => $headers,
-            ]);
+            $response = $this->client->get('fees/?from_wilaya_id='.$from_wilaya_id.'&to_wilaya_id='.$to_wilaya_id);
 
             // Return the response body as an array
             return json_decode($response->getBody()->getContents(), true);
@@ -174,25 +157,15 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
         $this->validateCreate($orderData);
 
         try {
-            // Initialize Guzzle client
-            $client = new Client;
-
-            // Define the headers
-            $headers = [
-                'X-API-ID' => $this->credentials['id'],
-                'X-API-TOKEN' => $this->credentials['token'],
-                'Content-Type' => 'application/json',
-            ];
-
             $requestBody = json_encode([$orderData], JSON_UNESCAPED_UNICODE);
 
             if ($requestBody === false) {
                 throw new CreateOrderException('Create Order failed : JSON encoding error');
             }
 
-            $request = new Request('POST', static::apiDomain().'/v1/parcels/', $headers, $requestBody);
-
-            $response = $client->send($request);
+            $response = $this->client->post('parcels', [
+                'body' => $requestBody,
+            ]);
 
             // Get the response body
             $body = $response->getBody()->getContents();
@@ -239,19 +212,8 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
     public function getOrder(string $trackingId): array
     {
         try {
-            // Initialize Guzzle client
-            $client = new Client(['http_errors' => false]);
-
-            // Define the headers
-            $headers = [
-                'X-API-ID' => $this->credentials['id'],
-                'X-API-TOKEN' => $this->credentials['token'],
-            ];
-
             // Make the GET request
-            $response = $client->request('GET', 'https://api.yalidine.app/v1/parcels/'.$trackingId, [
-                'headers' => $headers,
-            ]);
+            $response = $this->client->get('parcels/'.$trackingId);
 
             $data = json_decode($response->getBody()->getContents(), true);
 
@@ -265,5 +227,19 @@ abstract class YalidineProviderIntegration implements ShippingProviderContract
             // Handle exceptions
             throw new HttpException($guzzleException->getMessage());
         }
+    }
+
+    private function initClient(): Client
+    {
+        // Initialize Guzzle client
+        return new Client([
+            'base_uri' => 'https://api.yalidine.app/v1/',
+            'http_errors' => false,
+            'headers' => [
+                'X-API-ID' => $this->credentials['id'],
+                'X-API-TOKEN' => $this->credentials['token'],
+                'Content-Type' => 'application/json',
+            ],
+        ]);
     }
 }

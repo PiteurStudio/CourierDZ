@@ -13,12 +13,16 @@ use CourierDZ\Exceptions\TrackingIdNotFoundException;
 use CourierDZ\Support\ShippingProviderValidation;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Psr7\Request;
 use http\Exception\InvalidArgumentException;
 
 abstract class ProcolisProviderIntegration implements ShippingProviderContract
 {
     use ShippingProviderValidation;
+
+    /**
+     * Init Guzzle Client
+     */
+    protected Client $client;
 
     /**
      * Provider credentials
@@ -66,6 +70,8 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
 
         // Store the credentials
         $this->credentials = $credentials;
+        // Set the client
+        $this->client = $this->initClient();
     }
 
     // test credentials method
@@ -81,19 +87,8 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
     public function testCredentials(): bool
     {
         try {
-            // Initialize Guzzle client
-            $client = new Client;
-
-            // Define the headers
-            $headers = [
-                'token' => $this->credentials['token'],
-                'key' => $this->credentials['key'],
-            ];
-
             // Make the GET request
-            $response = $client->request('GET', 'https://procolis.com/api_v1/token', [
-                'headers' => $headers,
-            ]);
+            $response = $this->client->get('token');
 
             // Get the response body
             $body = $response->getBody()->getContents();
@@ -123,20 +118,8 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
     public function getRates(?int $from_wilaya_id = null, ?int $to_wilaya_id = null): array
     {
         try {
-            // Initialize Guzzle client
-            $client = new Client;
-
-            // Define the headers
-            $headers = [
-                'token' => $this->credentials['token'],
-                'key' => $this->credentials['key'],
-                'Content-Type' => 'application/json',
-            ];
-
             // Make the GET request
-            $response = $client->request('POST', 'https://procolis.com/api_v1/tarification', [
-                'headers' => $headers,
-            ]);
+            $response = $this->client->get('tarification');
 
             // Get the response body
             $body = $response->getBody()->getContents();
@@ -185,32 +168,18 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
         $this->validateCreate($orderData);
 
         // Prepare the request body
-        $data = [
+        $requestBody = json_encode([
             'Colis' => [
                 $orderData,
             ],
-        ];
-
-        $requestBody = json_encode($data, JSON_UNESCAPED_UNICODE);
+        ], JSON_UNESCAPED_UNICODE);
 
         if ($requestBody === false) {
             throw new CreateOrderException('Create Order failed ( JSON Encoding Error ) : '.json_last_error_msg());
         }
 
         try {
-            // Initialize Guzzle client
-            $client = new Client;
-
-            // Define the headers
-            $headers = [
-                'token' => $this->credentials['token'],
-                'key' => $this->credentials['key'],
-                'Content-Type' => 'application/json',
-            ];
-
-            $request = new Request('POST', 'https://procolis.com/api_v1/add_colis', $headers, $requestBody);
-
-            $response = $client->send($request);
+            $response = $this->client->post('add_colis', ['body' => $requestBody]);
 
             // Get the response body
             $body = $response->getBody()->getContents();
@@ -243,32 +212,18 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
      */
     public function getOrder(string $trackingId): array
     {
-        $data = [
+        $requestBody = json_encode([
             'Colis' => [
                 ['Tracking' => $trackingId],
             ],
-        ];
-
-        $requestBody = json_encode($data, JSON_UNESCAPED_UNICODE);
+        ], JSON_UNESCAPED_UNICODE);
 
         if ($requestBody === false) {
             throw new InvalidArgumentException('$trackingId must be a non-empty string');
         }
 
         try {
-            // Initialize Guzzle client
-            $client = new Client;
-
-            // Define the headers
-            $headers = [
-                'token' => $this->credentials['token'],
-                'key' => $this->credentials['key'],
-                'Content-Type' => 'application/json',
-            ];
-
-            $request = new Request('POST', 'https://procolis.com/api_v1/lire', $headers, $requestBody);
-
-            $response = $client->send($request);
+            $response = $this->client->post('lire', ['body' => $requestBody]);
 
             // Get the response body
             $body = $response->getBody()->getContents();
@@ -308,4 +263,18 @@ abstract class ProcolisProviderIntegration implements ShippingProviderContract
      * {@inheritdoc}
      */
     abstract public static function metadata(): array;
+
+    private function initClient(): Client
+    {
+        // Initialize Guzzle client
+        return new Client([
+            'base_uri' => 'https://procolis.com/api_v1/',
+            'http_errors' => false,
+            'headers' => [
+                'X-API-ID' => $this->credentials['token'],
+                'X-API-TOKEN' => $this->credentials['key'],
+                'Content-Type' => 'application/json',
+            ],
+        ]);
+    }
 }
